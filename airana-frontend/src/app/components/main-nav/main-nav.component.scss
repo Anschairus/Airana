@@ -1,0 +1,274 @@
+
+
+.main.nav.toolbar{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  }
+.mat-toolbar.mat-primary{
+  height: 50px;
+  justify-content: space-between;
+}
+.sidenav-container{
+  overflow-x: hidden;
+  overflow-y: auto;
+  height:auto;
+}
+
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.hidden{
+  display: none;
+}
+
+/////// OLD
+.mat-toolbar.mat-primary{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 300001;
+  }
+
+
+/*Navbar Left*/
+
+.navbar-left {
+  width: 150px;
+    height:100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    text-align: start;
+    align-items: center;
+    font: inherit;    
+    user-select: none;
+}
+.airana-menu{
+    cursor: pointer;
+    height: 50px;
+    position: fixed;
+    
+    user-select: none;
+    outline: 0;
+}
+.logo{
+    background: url(/assets/img/airana-e-logo.png) no-repeat;
+    position: absolute;
+    background-size: 48px 48px;
+    display: inline-block;
+    height: 50px;
+    padding-left: 16px;
+    padding-right: 30px;
+    font-weight: lighter;
+    user-select: none;
+    outline: 0;
+    text-overflow: ellipsis;
+    overflow: visible;
+    white-space: pre;
+}
+.brand{
+    font-family: titlefont;
+    font-size: 2em;
+    height: 50px;
+    line-height: 50px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: pre;
+}
+.navbar-left .mat-icon-button{
+  
+    margin-left: 4px;
+}
+.sidenav .mat-toolbar{
+  height: 50px;
+}
+.sidenav .mat-icon{
+  margin-left: 10px;
+}
+.menutab li{
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+.menutab.back{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.dropdown.left {
+    display: none;
+    
+}
+
+.dropdown a {
+    display: block;
+    line-height: auto;
+}
+.dropdown .back{
+    //xcolor: $airana1;
+    //border-bottom: 1px dotted  mat-color($airana-dark-secondary-color, 100);
+    position: relative;
+}
+.dropdown a li{
+    padding: 0.2em;
+    font-size: 1.2em;
+    line-height: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: pre;
+}
+.arrow.mobile{
+    display: none;
+    float: right;
+    height: 5px;
+    margin: 25px 0 0 0;
+    opacity: 0;
+    transition: opacity .5s linear,transform .5s ease-out;
+    width: 8px;
+
+}
+
+/*Navbar Partial*/
+
+.navbar-partial {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    text-align: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    outline: 0;
+    user-select: none;
+    box-sizing: border-box;
+    margin-right: auto;
+}
+.MenuTabs.partial{
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    visibility: visible;
+    
+    line-height: 50px;
+
+    display: inline-block;
+    font-size: 0;
+    margin-right: 0;
+    max-width: 100%;
+    opacity: 1;
+    overflow: hidden;
+    text-align: center;
+}
+.MenuTabs.partial{
+    font-size: 18px;
+    padding-top: 0;
+}
+.MenuTabs.partial a li, .selected-partial{
+    display: inline-block;
+    box-sizing: border-box;
+    font-weight: 700;
+    overflow: hidden;
+    padding: 0 0.5rem;
+    text-transform: uppercase;
+    font-size: 14px;
+    z-index: 99999999999999999999;
+    vertical-align: top;
+}
+
+.selected-partial{
+  width: 100px;
+    background: transparent;
+    padding: 0 1em 0 1em;
+    border: none;
+    box-sizing: border-box;
+    line-height: 50px;
+    height: 50px;
+    font-family: normalfont;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+ .selected-partial:focus{
+    outline: none;
+    }
+
+.title.mobile{
+    display: none;
+}
+.vertical-separation-navbar {
+    height: 30px;
+    display: inline-block;
+    font-size: 14px;
+    height: 30px;
+    margin: 10px .8rem;
+    vertical-align: top;
+}
+
+
+
+.browse {
+    position: relative;
+}
+
+.browse-icon {
+    border-radius: 100%;
+}
+
+
+.bubble-linker{
+    position: absolute;
+    top: 53px;
+    right: 25px;
+    width: 5px;
+    height: 5px;
+    transform: rotate(-45deg);
+    z-index: 2;
+    padding: 0!important;
+    margin: 0!important;
+}
+@media only screen and (max-width:600px){
+  .sidenav-container.body {
+  height: 100%;
+}
+.navbar-left{
+  margin-right: auto;
+}
+  .main.nav.toolbar .brand{
+  display: none;
+}
+.navbar-partial{
+  display: none;
+}
+.logo{
+  min-width: 50px;
+  max-width: 200px;
+  padding-right: 0;
+}
+
+.min-width600 .navbar-right .user.profile{
+ display: none;
+}
+.max-width600 .user.profile{
+ display: block;
+}
+}
+/**/

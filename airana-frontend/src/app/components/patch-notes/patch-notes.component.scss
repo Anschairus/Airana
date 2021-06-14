@@ -1,0 +1,24 @@
+
+.wrapper{
+    width:90%;
+}
+h3{
+    color: lightpink;
+    margin-bottom: 0.2em;
+}
+
+div.most-recent-wrapper{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+
+span.note{
+    text-align: center;
+    font-size: 0.9em;
+    font-style: italic;
+    color: silver;
+    font-weight: lighter;
+}

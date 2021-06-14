@@ -1,0 +1,40 @@
+
+.sign-up {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.wrapper form,
+.wrapper > div {
+  xwidth: 100%;
+}
+.wrapper>article{
+  margin: 0 auto;
+  width: 40%;
+  min-width: 450px;
+  min-height: 600px;
+}
+.signUpHelp h2 {
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+button,
+.signUpHelp,
+.signUpInput {
+  margin: 1em;
+}
+.signUpInput {
+  height: 2em;
+  padding: 0 2em;
+  font-size: 1.2em;
+  line-height: 2em;
+  text-align: center;
+}
+.rememberMe input {
+  margin: 0;
+}
+

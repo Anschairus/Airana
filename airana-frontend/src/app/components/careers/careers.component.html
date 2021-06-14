@@ -1,0 +1,23 @@
+<div id="wrapper" class="wrapper">
+    <h1>{{title}}</h1>
+    <article *ngFor="let class of Classes">
+        <h2 (click)="isSelected(class.name)">{{class.name}}</h2>
+        <div *ngIf="selectedClass==class.name">
+            <div *ngFor="let subclass of class.subclasses">
+                <h3>{{subclass.name}}</h3>
+                <ul *ngFor="let skill of subclass.skills">
+                    <li>{{skill.name}}
+                        <p innerHtml="{{skill.description}}"></p>
+                       <!-- <ul *ngIf="false">
+                            <li>{{skill.slot1}}</li>
+                            <li>{{skill.slot2}}</li>
+                            <li>{{skill.slot3}}</li>
+                            <li>{{skill.slot4}}</li>
+                        </ul>-->
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </article>
+</div>

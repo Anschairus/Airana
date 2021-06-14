@@ -1,0 +1,521 @@
+
+/*VARIABLES*/
+$str:hsl(0, 80%, 65%);
+$agi:hsl(40, 80%, 65%);
+$dex:hsl(80, 80%, 65%);
+$int:hsl(240, 90%, 75%);
+$per:hsl(160, 80%, 65%);
+$wil:hsl(280, 80%, 65%);
+$vit:hsl(120, 80%, 65%);
+$car:hsl(320, 80%, 65%);
+$luk:hsl(200, 80%, 65%);
+
+$liMargin:6px;
+
+/* MARGINS ADJUSTEMENT
+
+flex: 0 1 calc((100% / 4) - #{$liMargin} + (#{$liMargin} / 4)); Poner en <li> para crear tamaños, substituir 4 por el Nº de columnas
+
+ul>li:nth-of-type(1n){
+  margin-right: 0;
+}
+ul>li:nth-of-type(1n+1){
+  margin-left:0;
+}
+ul>li:nth-last-of-type(1){
+  margin-right: 0;
+}
+*/
+/*GENERAL*/
+
+section.details{
+width: 100%;
+min-height: calc(100vh - 10vh);
+margin-bottom:10vh;
+
+}
+section.details>.section-wrapper{
+width: 100%;
+padding: 1rem;
+display: flex;
+flex-flow: row wrap;
+justify-content: flex-start;
+align-items: flex-start
+}
+section.details.left, section.details.right{
+   width: calc(100% / 2);
+}
+section.details.left>.section-wrapper{
+  padding-right: 0.5rem;
+}
+section.details.right>.section-wrapper{
+  padding-left: 0.5rem;
+}
+.title{
+width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0.5rem 0 0.5rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.details .title.wide>h2{
+  width: 100%;
+}
+.title>div{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.title>div>div{
+  width: 110px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+}
+.title>div>div>div:nth-child(2),.title>div>div>input{
+  width: calc(100% - 5%);
+  text-align: center;
+  color: black;
+  
+}
+    
+ul{
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  text-align: center;
+}
+ul>li{
+  margin-right: $liMargin;
+  margin-bottom: $liMargin;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  text-align: center;
+  padding: 0.3rem;
+  box-shadow: 0px 0px 15px -5px rgba(255, 255, 255, 0.3);
+}
+
+ul>li>div:nth-child(2),ul>li>input{
+  flex-grow: 1;
+  text-align: center;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+ul>li>input,.title>div>div>input{
+  border: none;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.details .title>h2{
+  margin-right: auto;
+    text-transform: uppercase;
+    width: 50%;
+}
+.details .full.width.li,.details .full.width.li textarea{
+  margin-right: 0;
+flex: 0 1 calc((100% / 1) - #{$liMargin} + (#{$liMargin} / 1));
+}
+.details .full.width.li *{
+  padding-left: 1rem;
+  text-align: left;
+}
+/*STAT COLOURS*/
+section.stat.details .str>label:nth-child(1),.aptitudes.details li.str>label:nth-child(1),.aptitudes.details ul>h3.str{
+  color: $str;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .agi>label:nth-child(1),.aptitudes.details li.agi>label:nth-child(1),.aptitudes.details ul>h3.agi{
+  color: $agi;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .dex>label:nth-child(1),.aptitudes.details li.dex>label:nth-child(1),.aptitudes.details ul>h3.dex{
+  color: $dex;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .int>label:nth-child(1),.aptitudes.details li.int>label:nth-child(1),.aptitudes.details ul>h3.int{
+  color: $int;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .per>label:nth-child(1),.aptitudes.details li.per>label:nth-child(1),.aptitudes.details ul>h3.per{
+  color: $per;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .wil>label:nth-child(1),.aptitudes.details li.wil>label:nth-child(1),.aptitudes.details ul>h3.wil{
+  color: $wil;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .vit>label:nth-child(1),.aptitudes.details li.vit>label:nth-child(1),.aptitudes.details ul>h3.vit{
+  color: $vit;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .car>label:nth-child(1),.aptitudes.details li.car>label:nth-child(1),.aptitudes.details ul>h3.car{
+  color: $car;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .luk>label:nth-child(1),.aptitudes.details li.luk>label:nth-child(1),.aptitudes.details ul>h3.luk{
+  color: $luk;
+  text-shadow: 1px 1px black;
+}
+
+//SPECIFIC***/\***SPECIFIC\\
+//SPECIFIC**/  \**SPECIFIC\\
+//SPECIFIC*/NARI\*SPECIFIC\\
+
+//FIXED CONTENT
+nav.fixed{
+  height: 40vh;
+  width: 12%;
+  top: calc(50px + 112px);
+  left: 0;
+ 
+}
+nav.fixed .nav-wrapper{
+ padding: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 100%;
+}
+//ASIDE
+aside.fixed{
+  width: 18%;
+  top: calc(50px + 92px);
+  max-height: calc(100vh - 50px - 112px);
+  right: 0;
+  padding: 0 1rem 0 0;
+}
+aside>.wrapper{
+  padding-top: 0;
+}
+.character-image{
+    overflow: hidden;
+    pointer-events: none;
+  } 
+   .character-image img{
+     width:100%;
+    max-width: 400px;
+    pointer-events: none;
+  } 
+.profile ul>li{
+margin-right: 0;
+flex: 0 1 calc((100% / 1) - #{$liMargin} + (#{$liMargin} / 1));
+}
+.edit.buttons{
+  margin: 0.5rem 0;
+}
+//CONTENT & SECTIONS
+.content{   
+  width: 70%;
+  margin: 0 18% 0 12%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.content>:nth-child(1){
+  min-height: calc(100vh - 50px - 112px - 1vh);
+  margin-bottom: 1vh;
+}
+/*Personal Details*/
+
+@media only screen and (min-width: 1091px) {
+.personal.details ul>li{
+flex: 0 1 calc((100% / 4) - #{$liMargin} + (#{$liMargin} / 4));
+}
+.personal.details ul>li:nth-of-type(4n){
+  margin-right: 0;
+}
+.personal.details ul>li:nth-of-type(4n+1){
+  margin-left:0;
+}
+}
+.personal.details ul>li:nth-last-of-type(1){
+  margin-right: 0;
+}
+
+.status.edit.select{
+  text-align: center;
+}
+/*STAT & MODIFIER*/
+.stat.details .title>h2{
+    width: 30%;
+}
+.stat.details ul,.modifier.details ul{
+  
+flex: 0 1 calc(100% / 3);
+  flex-flow: column wrap;
+  align-content: stretch;
+}
+.stat.details ul:not(:nth-of-type(1)>li):nth-of-type(3n+1)>li{
+  margin-right: 0;
+}
+.stat.details ul:nth-of-type(3n+1)>li,.modifier.details ul:nth-of-type(3n)>li{
+  margin-right: 0;
+}
+.stat.details ul:nth-of-type(3n+2)>li,.modifier.details ul:nth-of-type(3n+1)>li{
+  margin-left:0;
+}
+.stat.details ul:nth-last-of-type(1)>li,.modifier.details ul:nth-last-of-type(1)>li{
+  margin-right: 0;
+}
+.stat.details ul>li,.modifier.details ul>li{
+flex: 0 1 calc((100% / 1) - #{$liMargin} + (#{$liMargin} / 1));
+}
+#stats-half{
+  
+flex: 0 1 calc(100%);
+  margin-right: 0;
+  flex-flow: row wrap;
+}
+
+#stats-half>li.half{
+  flex: 0 1 calc((100% / 2) - #{$liMargin} + (#{$liMargin} / 2));
+}
+
+ul#stats-half>.half:nth-of-type(1){
+  margin-left:0;
+  margin-right: $liMargin;
+}
+ul#stats-half>.half:nth-of-type(2){
+  margin-right: 0;
+}
+
+/*APTITUDES*/
+
+.aptitudes.details ul>h3{
+flex: 0 1 calc((100% / 1) - #{$liMargin} + (#{$liMargin} / 1));
+  padding-left:1rem;
+  text-transform: uppercase;
+}
+
+.aptitudes ul{
+flex: 0 1 calc((100% / 1) - #{$liMargin} + (#{$liMargin} / 1));
+  flex-flow: row wrap;
+}
+@media only screen and (min-width: 1091px) {
+.aptitudes.details ul>li{
+flex: 0 1 calc((100% / 4) - #{$liMargin} + (#{$liMargin} / 4));
+  text-transform: capitalize;
+}
+.aptitudes.details ul>li:nth-of-type(4n){
+  margin-right: 0;
+}
+.aptitudes.details ul>li:nth-of-type(4n+1){
+  margin-left:0;
+}
+}
+.aptitudes.details ul>li:nth-last-of-type(1){
+  margin-right: 0;
+}
+.biography.details textarea{
+  width: 100%;
+}
+//MEDIAQUERIES***/\***MEDIAQUERIES\\
+//MEDIAQUERIES**/  \**MEDIAQUERIES\\
+//MEDIAQUERIES*/NARI\*MEDIAQUERIES\\
+
+@media (max-width: 1300px) {
+  .section-wrapper .title{
+    flex-flow: row wrap;
+  }
+  .stat.details .title>h2,.details .title>h2{
+    width: 30%;
+}
+}
+@media only screen and (max-width: 1300px) and (min-width:1091px) {
+
+
+}
+@media only screen and (max-width: 1090px) and (min-width:769px) {
+.profile ul{
+    justify-content: center;
+}
+.profile ul>li{
+flex: 0 1 calc((100% / 2) - #{$liMargin} + (#{$liMargin} / 2));
+margin-right: $liMargin;
+max-width: 400px;
+justify-self: center;
+}
+  .profile ul>li:nth-of-type(2n){
+  margin-right: 0;
+}
+.profile ul>li:nth-of-type(2n+1){
+  margin-left:0;
+}
+ .personal.details ul>li{
+flex: 0 1 calc((100% / 3) - #{$liMargin} + (#{$liMargin} / 3));
+}
+.personal.details ul>li:nth-of-type(3n){
+  margin-right: 0;
+}
+.personal.details ul>li:nth-of-type(3n+1){
+  margin-left:0;
+}
+.aptitudes.details ul>li{
+flex: 0 1 calc((100% / 3) - #{$liMargin} + (#{$liMargin} / 3));
+  text-transform: capitalize;
+}
+.aptitudes.details ul>li:nth-of-type(3n){
+  margin-right: 0;
+}
+.aptitudes.details ul>li:nth-of-type(3n+1){
+  margin-left:0;
+} 
+
+}
+@media only screen and (max-width: 1090px) {
+nav.fixed{
+  position: relative;
+  width: 100%;
+  height: auto;
+  top: 0;
+}
+nav.fixed .nav-wrapper{
+ padding: 1rem;
+ width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+aside.fixed{
+  max-height: none;
+  position: relative;
+  min-height: calc(100vh - 56px - 50px - 112px - 10vh);
+  margin-bottom: 10vh;
+  width: 100%;
+  padding:0 1rem;
+  top: 0;
+}
+aside.fixed .wrapper{
+  position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  min-height: calc(100vh - 10vh);
+  margin-bottom:10vh;
+  width: 100%;
+  top: 0;
+}
+.edit.buttons{
+  position: fixed;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  right: -5px;
+  padding: 0.5rem;
+  bottom: 1.3rem;
+  z-index: 1000;
+  border-radius:50% 0 0 50% ;
+  //border: 1px solid $primary;
+ // background: $background;
+
+}
+
+.character-image{
+  //border: 1px solid mat-color($airana-dark-secondary-color, 100);
+  margin-left: 0;
+  margin-bottom: 1rem;
+  box-shadow: 0px 0px 15px -5px rgba(255, 255, 255, 0.3);
+}
+.character-image img{
+  border-top: none;
+  border-bottom: none; 
+}
+
+
+
+  .content>:nth-child(1){
+  min-height: calc(100vh - 1vh);
+  margin-bottom:1vh;
+}
+  .content{   
+  width: 100%;
+  margin: 0;
+}
+  section.details.left, section.details.right{
+   width: calc(100%);
+}
+
+section.details.left>.section-wrapper{
+  padding-right: 1rem;
+}
+section.details.right>.section-wrapper{
+  padding-left: 1rem;
+}
+
+}
+@media only screen and (max-width: 768px)  and (min-width:491px) {
+
+   .personal.details ul>li{
+flex: 0 1 calc((100% / 3) - #{$liMargin} + (#{$liMargin} / 3));
+}
+.personal.details ul>li:nth-of-type(3n){
+  margin-right: 0;
+}
+.personal.details ul>li:nth-of-type(3n+1){
+  margin-left:0;
+}
+.aptitudes.details ul>li{
+flex: 0 1 calc((100% / 3) - #{$liMargin} + (#{$liMargin} / 3));
+  text-transform: capitalize;
+}
+.aptitudes.details ul>li:nth-of-type(3n){
+  margin-right: 0;
+}
+.aptitudes.details ul>li:nth-of-type(3n+1){
+  margin-left:0;
+} 
+}
+
+@media only screen and (max-width: 768px) {
+   .profile ul{
+    justify-content: center;
+}
+.profile ul>li{
+flex: 0 1 calc((100% / 1) - #{$liMargin} + (#{$liMargin} / 1));
+max-width: 400px;
+justify-self: center;
+}
+}
+@media only screen and (max-width: 490px) {
+    .stat.details .title>h2,.details .title>h2{
+    width: 100%;
+}
+   
+   .personal.details ul>li{
+flex: 0 1 calc((100% / 2) - #{$liMargin} + (#{$liMargin} / 2));
+}
+.personal.details ul>li:nth-of-type(2n){
+  margin-right: 0;
+}
+.personal.details ul>li:nth-of-type(2n+1){
+  margin-left:0;
+}
+.aptitudes.details ul>li{
+flex: 0 1 calc((100% / 2) - #{$liMargin} + (#{$liMargin} / 2));
+  text-transform: capitalize;
+}
+.aptitudes.details ul>li:nth-of-type(2n){
+  margin-right: 0;
+}
+.aptitudes.details ul>li:nth-of-type(2n+1){
+  margin-left:0;
+} 
+
+}

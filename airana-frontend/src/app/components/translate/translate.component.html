@@ -1,0 +1,41 @@
+<div class="frontground" *ngIf="!loaded">
+    <div class="main-loading airana-title">Airana</div>
+</div>
+
+<div id="wrapper" class="wide grid wrapper">
+    <h1>{{title}}</h1>
+    <div class="translate wrapper language">
+        <div class="left side">
+            <h2>Input Language</h2>
+            {{inputLanguage}}
+        </div>
+        <div class="right side language">
+            <h2>Output Language</h2>
+            {{outputLanguage}}
+        </div>
+        <div class="left side analysis">
+            <h2>Input Duo</h2>
+            <div class="word analysis" *ngFor="let frequencyWord of inputVocalAdyacentesFrec">
+             {{frequencyWord}}
+            </div>
+            <h2>Input Trio</h2>
+            <div class="word analysis" *ngFor="let frequencyWord of inputVocalAdyacentesFrec">
+             {{frequencyWord}}
+            </div>
+        </div>
+        <div class="right side analysis">
+            <h2>Output Duo</h2>
+            <div class="word analysis" *ngFor="let frequencyWord of outputVocalAdyacentesFrec">
+                {{frequencyWord}}
+            </div>
+            <h2>Output Trio</h2>
+            <div class="word analysis" *ngFor="let frequencyWord of outputVocalAdyacentesFrec">
+                {{frequencyWord}}
+            </div>
+        </div>
+    </div>
+    <div>
+        
+       
+
+    </div>

@@ -1,0 +1,22 @@
+
+.wrapper{
+    width:90%;
+}
+h2 {
+  color: lightpink;
+  margin-bottom: 0.2em;
+  user-select: none;
+}
+
+article > ul > li {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+span.note {
+  text-align: center;
+  font-size: 0.9em;
+  font-style: italic;
+  color: silver;
+  font-weight: lighter;
+}

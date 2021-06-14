@@ -1,0 +1,123 @@
+<div class="frontground" *ngIf="!loaded">
+  <div class="main-loading airana-title">Airana</div>
+</div>
+
+<div id="wrapper" class="wide grid wrapper">
+  <h1>{{title}}</h1>
+
+  <div>
+    
+    <div class="filter-bar">
+      <input type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Search">
+      <mat-radio-group id="category" [(ngModel)]="category" aria-label="Select sort direction">
+        <mat-radio-button class="tp-radio-button" (click)="orderBy(category,order)" ngDefaultControl value="name">Name</mat-radio-button>
+        <mat-radio-button  (click)="orderBy(category,order)" ngDefaultControl value="surname">Surname</mat-radio-button>
+        <mat-radio-button  (click)="orderBy(category,order)" ngDefaultControl value="nationality">Nationality</mat-radio-button>
+      </mat-radio-group>
+      <mat-radio-group id="direction" [(ngModel)]="order" aria-label="Select sort direction">
+        <mat-radio-button  (click)="orderBy(category,order)" ngDefaultControl [value]="false">Desc.</mat-radio-button>
+        <mat-radio-button  (click)="orderBy(category,order)" ngDefaultControl [value]="true">Asc.</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    
+    <ul *ngIf="characterTabs" class="CharacterTabs undecorated">
+      <a (click)="onSelect(characterTab)" class="CharacterTab" *ngFor="let characterTab of orderBy(category,order)|filter:searchTerm">
+        <li>
+          <h4>{{characterTab.name}} {{characterTab.surname}}</h4>
+          <br>
+          <ul>
+            <li *ngIf="characterTab.age!=0 && characterTab.age!=null && characterTab.status !=0">Age: {{characterTab.age}} years old</li>
+            <li *ngIf="characterTab.height!=0 && characterTab.height!=null && characterTab.status !=0">Height: {{characterTab.height}} cm /
+              {{ft(characterTab.height)}}</li>
+            <li *ngIf="characterTab.weight!=0 &&characterTab.weight!=null&& characterTab.status !=0">Weight: {{characterTab.weight}} kg /
+              {{lb(characterTab.weight)}}</li>
+            <li
+              *ngIf="(characterTab.status !=0) && (characterTab.chest !=0 &&characterTab.chest&&characterTab.chest!=null) && (characterTab.waist !=0&&characterTab.waist&&characterTab.waist!=null) && (characterTab.hip !=0&&characterTab.hip&&characterTab.hip!=null)">
+              Measurements:
+              {{bulge(characterTab.race)}}{{characterTab.chest.toFixed(0)}}-{{characterTab.waist.toFixed(0)}}-{{characterTab.hip.toFixed(0)}}<span *ngIf="characterTab.feet">-</span>{{characterTab.feet}}
+            </li>
+            <li *ngIf="characterTab.nationality">Nationality: {{characterTab.nationality}}</li>
+            <li *ngIf="characterTab.cpp.membership">C.P.P. : {{cpp[lang].ranks[characterTab.cpp.rank]}}</li>
+            <li *ngIf="characterTab.status && characterTab.status != 'Alive'">Status: {{characterTab.status}}</li>
+            <li *ngIf="characterTab.afiliation">Institution: {{characterTab.afiliation.name}} ({{characterTab.afiliation.rank}})
+            </li>
+            <li *ngIf="characterTab.career">Career: {{characterTab.career}}</li>
+            <li *ngIf="characterTab.powersourcre && characterTab.status !='Dead'">Power Sourcre:
+              {{characterTab.powersourcre}}</li>
+            <li *ngIf="characterTab.powermethod && characterTab.status !='Dead'">Power Method:
+              {{characterTab.powermethod}}</li>
+            <li *ngIf="characterTab.pranalanguages && characterTab.status !='Dead'">Prana Languages:
+              {{characterTab.pranalanguages}}</li>
+            <li *ngIf="characterTab.specialization && characterTab.status !='Dead'">Specialization:
+              {{characterTab.specialization}}</li>
+            <li *ngIf="characterTab.pathresearch && characterTab.status !='Dead'">Path Research:
+              {{characterTab.pathresearch}}</li>
+
+            <div *ngIf="false" class="stats">
+              <li>HP: {{150+(characterTab.stats.vit+characterTab.stats.base.vit)*4}}</li>
+              <li>SP:
+                {{(30+(characterTab.statsstr+characterTab.statsbasestr+characterTab.statsagi+characterTab.statsbaseagi+characterTab.statsdex+characterTab.statsbasedex+characterTab.statsvit+characterTab.statsbasevit+characterTab.statsint+characterTab.statsbaseint+characterTab.statsper+characterTab.statsbaseper+characterTab.statswil+characterTab.statsbasewil+characterTab.statscar+characterTab.statsbasecar+characterTab.statsluk+characterTab.statsbaseluk)/9).toFixed(0)}}
+              </li>
+              <li>STR: {{characterTab.stats.str+characterTab.stats.base.str}}</li>
+              <li>AGI: {{characterTab.statsagi+characterTab.statsbaseagi}}</li>
+              <li>DEX: {{characterTab.statsdex+characterTab.statsbasedex}}</li>
+              <li>VIT: {{characterTab.statsvit+characterTab.statsbasevit}}</li>
+              <li>INT: {{characterTab.statsint+characterTab.statsbaseint}}</li>
+              <li>PER: {{characterTab.statsper+characterTab.statsbaseper}}</li>
+              <li>WIL: {{characterTab.statswil+characterTab.statsbasewil}}</li>
+              <li>CAR: {{characterTab.statscar+characterTab.statsbasecar}}</li>
+              <li>LUK: {{characterTab.statsluk+characterTab.statsbaseluk}}</li>
+            </div>
+            <div *ngIf="false" class="modifiers">
+              <li>Atk: {{(characterTab.statsstr+characterTab.statsbasestr)*2}} </li>
+              <li>R.Atk: {{(characterTab.statsdex+characterTab.statsbasedex)*2}}</li>
+              <li>Hit:
+                {{(characterTab.statsdex+characterTab.statsbasedex+characterTab.statsper+characterTab.statsbaseper)/10}}
+              </li>
+              <li>Block:
+                {{(characterTab.statsdex+characterTab.statsbasedex+characterTab.statsstr+characterTab.statsbasestr)/10}}
+              </li>
+              <li>Flee:
+                {{(characterTab.statsagi+characterTab.statsbaseagi+characterTab.statsper+characterTab.statsbaseper)/10}}
+              </li>
+
+              <li>Def:
+                {{(((characterTab.statsvit+characterTab.statsbasevit)/(characterTab.statsvit+characterTab.statsbasevit+100))*100).toFixed(1)}}%
+              </li>
+              <li>Can: {{(characterTab.statsvit+characterTab.statsbasevit)/5}}</li>
+              <li>Ini: {{(characterTab.statsagi+characterTab.statsbaseagi)/10}}</li>
+              <li>M.Atk: {{(characterTab.statsint+characterTab.statsbaseint)*2}} </li>
+              <li>Psy:
+                {{(((characterTab.statswil+characterTab.statsbasewil)/(characterTab.statswil+characterTab.statsbasewil+100))*100).toFixed(1)}}%
+                | {{(characterTab.statswil+characterTab.statsbasewil)*2}} </li>
+              <li>Focus:
+                {{(((characterTab.statsint+characterTab.statsbaseint)/(characterTab.statsint+characterTab.statsbaseint+100))*100).toFixed(1)}}%
+              </li>
+              <li>Crit:
+                {{(((characterTab.statsluk+characterTab.statsbaseluk)/(characterTab.statsluk+characterTab.statsbaseluk+100))*100).toFixed(1)}}%
+              </li>
+              <li>Sympathy:
+                {{(((characterTab.statscar+characterTab.statsbasecar)/(characterTab.statscar+characterTab.statsbasecar+100))*100).toFixed(1)}}%
+              </li>
+              <li>Sanity:
+                {{(((characterTab.statswil+characterTab.statsbasewil)/(characterTab.statswil+characterTab.statsbasewil+100))*50+50).toFixed(1)}}%
+              </li>
+              <li>Aspd: {{((characterTab.statsagi+characterTab.statsbaseagi)/100+2).toFixed(1)}}</li>
+              <li>Mspd: {{(2+(characterTab.statsagi+characterTab.statsbaseagi)/50).toFixed(1)}}</li>
+              <li>Total SP: {{characterTab.level*15+80}}</li>
+              <li>SP Left:
+                {{characterTab.level*15+80-characterTab.statsstr-characterTab.statsagi-characterTab.statsdex-characterTab.statsvit-characterTab.statsint-characterTab.statsper-characterTab.statswil-characterTab.statscar-characterTab.statsluk}}
+              </li>
+            </div>
+
+          </ul>
+        </li>
+        <div class="character-image "
+          [ngStyle]="{'background-image':'url('+characterImg(characterTab)+')','background-position':'center top','background-repeat':'no-repeat','background-size': 'cover'}">
+        </div>
+
+
+      </a>
+    </ul>
+  </div>
+</div>

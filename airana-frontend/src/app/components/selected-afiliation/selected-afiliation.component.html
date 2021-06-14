@@ -1,0 +1,120 @@
+<div class="frontground" *ngIf="!loaded">
+    <div class="main-loading airana-title">Airana</div>
+</div>
+<div id="wrapper" class="wrapper selected-character">
+    <h1 *ngIf="afiliationTab">{{afiliationTab.name}}</h1>
+    <div class="character-image">
+
+        <img src="{{characterImg(afiliationTab)}}" alt="{{afiliationTab.image}}">
+    </div>
+     <form [ngClass.gt-sm]="'aside'" class="wrapper" *ngIf="afiliationTabForm | async;" [formGroup]="form"
+        (ngSubmit)="onSubmit()">
+        <nav id="nav" class="aside">
+            
+           
+<div class="nav-wrapper" [ngClass.gt-sm]="'fixed'">
+    <ejs-accumulationchart id="chart-container" [legendSettings]='legendSettings'[tooltip]="tooltipSettings">
+                <e-accumulation-annotations>
+                    <e-accumulation-annotation content='<div style="border: 1px solid black; background-color:#f5f5f5; padding: 5px 5px 5px 5px">3.5</div>'
+                     region='Series' coordinateUnits='Point' x='name' y='value'>
+                    </e-accumulation-annotation>
+                </e-accumulation-annotations>
+                <e-accumulation-series-collection>
+                    <e-accumulation-series  [dataSource]='piedata' xName='name' yName='value' innerRadius='40%'   tooltipMappingName='text'[dataLabel]='datalabel'></e-accumulation-series>
+                </e-accumulation-series-collection>
+            </ejs-accumulationchart>
+                <!--<a [routerLink]="['./']" fragment="main-details" (click)="scrollToAnchor()">
+                    <div class="section-button">Main Details</div>
+                </a>
+                <a [routerLink]="['./']" fragment="personal-details" (click)="scrollToAnchor()">
+                    <div class="section-button">Personal Details</div>
+                </a>
+                <a [routerLink]="['./']" fragment="stats-details" (click)="scrollToAnchor()">
+                    <div class="section-button">Stats</div>
+                </a>
+                <a [routerLink]="['./']" fragment="modifiers-details" (click)="scrollToAnchor()">
+                    <div class="section-button">Modifiers</div>
+                </a>
+                <a [routerLink]="['./']" fragment="aptitudes-details" (click)="scrollToAnchor()">
+                    <div *ngIf="afiliationTab" class="section-button">Aptitudes</div>
+                </a>
+                <a [routerLink]="['./']" fragment="equipement-details" (click)="scrollToAnchor()">
+                    <div *ngIf="false" class="section-button">Equipement</div>
+                </a>
+                <a [routerLink]="['./']" fragment="biography-details" (click)="scrollToAnchor()">
+                    <div *ngIf="afiliationTab && afiliationTab.ownhistory" class="section-button">Biography</div>
+                </a>-->
+            </div>
+           
+        </nav>
+
+        <aside id="right-aside">
+            <div class="wrapper" [ngClass.gt-sm]="'fixed'">
+                
+                
+                <div class="profile" >
+                    <div [ngClass.lt-md]="'fixed'" class="edit buttons">
+                        <!--<a [routerLink]="['./']" fragment="nav" (click)="scrollToAnchor()" fxShow.lt-md="true"
+                            fxHide="true" mat-icon-button color="accent">
+                            <mat-icon mat-raised-button class="keyboard_arrow_up mat-icon">
+                                keyboard_arrow_up</mat-icon>
+                        </a>-->
+                        <button *ngIf="!isEditing && checkAdmin(currentAccount)" mat-icon-button color="accent"
+                            (click)="setIsEditing(true,false)">
+                            <mat-icon mat-raised-button class="edit mat-icon">
+                                edit</mat-icon>
+                        </button>
+                        <button [disabled]="!form.valid" *ngIf="isEditing && checkAdmin(currentAccount)" type="submit"
+                            mat-icon-button color="accent">
+                            <mat-icon mat-raised-button class="save mat-icon">save
+                            </mat-icon>
+                        </button>
+                        <button *ngIf="isEditing && checkAdmin(currentAccount)" color="warn" mat-icon-button
+                            (click)="setIsEditing(false,false)">
+                            <mat-icon mat-raised-button class="cancel mat-icon">
+                                cancel</mat-icon>
+                        </button>
+                    </div>
+                    <!--<div class="edit buttons">
+                        <button mat-icon-button color="primary" (click)="setIsEditing(true,false)">
+                            <mat-icon mat-raised-button class="edit mat-icon">
+                                edit</mat-icon>
+                        </button>
+                        <button [disabled]="!form.valid" type="submit" mat-icon-button color="accent">
+                            <mat-icon mat-raised-button class="save mat-icon">save
+                            </mat-icon>
+                        </button>
+                        <button color="warn" mat-icon-button (click)="setIsEditing(false,false)">
+                            <mat-icon mat-raised-button class="cancel mat-icon">
+                                cancel</mat-icon>
+                        </button>
+                    </div>-->
+
+
+                    <ul>
+                        <li *ngIf="isEditing">
+                            <label for="name">Name</label>
+                            <input formControlName="name" *ngIf="isEditing" type="text"
+                                placeholder="{{afiliationTab.name}}">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+       <div class="content">
+            <section *ngIf="true" id="main-details" class="main details">
+                <div class="section-wrapper">
+                    <div class="main title">
+                        <h2>Members</h2>
+
+                    </div>
+                    <ul *ngFor="let member of allmembers">
+<li ><div (click)="onSelect(member)">{{member.name}} {{member.surname}}</div> <span>{{member.career}}</span><span>{{getIndexAfiliation(member,afiliationTab)}}</span></li>
+                    </ul>
+                   
+                </div>
+            </section>
+        </div>
+    </form>
+    
+</div>

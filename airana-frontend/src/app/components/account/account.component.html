@@ -1,0 +1,81 @@
+<div class="navbar-right">
+    <div class="status" *ngIf="false">
+        <div class="status-bg"></div>
+        <div class="status-message">
+            <div class="status-title-list">Status</div>
+            <br>
+            <div class="status-text">
+                The Status statement is deactivated.
+            </div>
+        </div>
+    </div>
+    <div class="notifications" *ngIf="false">
+        <a href="" class="updates">
+            <span class="notification-count">
+                1
+            </span>
+        </a>/
+        <a href="" class="notifications">
+            <span class="notification-count">
+                2
+            </span>
+        </a>
+
+    </div>
+
+    <div class="navbar-account" *ngIf="currentAccount" (mouseover)="dropdownRight=true"
+        (mouseleave)="dropdownRight=false">
+
+        <a [routerLink]="['account/profile']" class="user profile">
+            <div class="account-image user-img"
+                [ngStyle]="{'background-image': 'url('+accountImg('currentAccount.name')+')','background-position': 'center','background-repeat':'no-repeat','background-size': 'cover'}">
+            </div>
+            <div class="pointerCursor player-name"> {{currentAccount.username}}</div>
+        </a>
+
+        <div class=" dropdown right " *ngIf="dropdownRight">
+            <ul>
+
+                <a href=" ">
+                    <li>·{{currentAccount.name}}</li>
+                </a>
+                <a href=" ">
+                    <li>·{{currentAccount.surname}}</li>
+                </a>
+
+                <a href=" ">
+                    <li>·{{currentAccount.email}}</li>
+                </a>
+
+                <a href=" ">
+                </a>
+                <a href=" ">
+                </a>
+               
+                <mat-select placeholder="Choose your theme" (selectionChange)="onSetTheme()" value="airana-dark"
+                    [(ngModel)]=currentTheme>
+                    <mat-option value="airana-light">Light Theme</mat-option>
+                    <mat-option value="airana-dark">Dark Theme</mat-option>
+                </mat-select>
+                <mat-icon mat-raised-button class="edit mat-icon" color="primary">edit</mat-icon>
+                <mat-icon mat-raised-button class="save mat-icon" color="accent">save</mat-icon>
+                <mat-icon mat-raised-button class="cancel mat-icon" color="warn">cancel</mat-icon>
+                <ul *ngIf="false">
+                    <select>
+                        <option value="Prueba Lang Value ">Prueba Lang</option>
+                        <option value="Prueba Lang Value ">Prueba Lang</option>
+                    </select>
+                </ul>
+                <br>
+
+                <li><a [routerLink]="['account/sign-in']">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="navbar-account" *ngIf="!currentAccount">
+
+        <a [routerLink]="['account/sign-in']" class="user profile">
+            <div>Sign In</div>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,1585 @@
+<div class="frontground" *ngIf="!loaded">
+    <div class="main-loading airana-title">Airana</div>
+</div>
+<div id="wrapper" class="wrapper selected-character">
+    <h1 *ngIf="characterTab">{{characterTab.name}} {{characterTab.surname}}</h1>
+    <form [ngClass.gt-sm]="'aside'" class="wrapper" *ngIf="characterTabForm | async;" [formGroup]="form"
+        (ngSubmit)="onSubmit()">
+        <!-- <nav id="nav" class="aside">
+            <div class="nav-wrapper" [ngClass.gt-sm]="'fixed'">
+                <a [routerLink]="['./']" fragment="main-details" (click)="viewportScrolling.scrollToAnchor()">
+                    <div class="section-button">Main Details</div>
+                </a>
+                <a [routerLink]="['./']" fragment="personal-details" (click)="scrollToAnchor()">
+                    <div class="section-button">Personal Details</div>
+                </a>
+                <a [routerLink]="['./']" fragment="stats-details" (click)="scrollToAnchor()">
+                    <div class="section-button">Stats</div>
+                </a>
+                <a [routerLink]="['./']" fragment="modifiers-details" (click)="scrollToAnchor()">
+                    <div class="section-button">Modifiers</div>
+                </a>
+                <a [routerLink]="['./']" fragment="aptitudes-details" (click)="scrollToAnchor()">
+                    <div *ngIf="characterTab" class="section-button">Aptitudes</div>
+                </a>
+                <a [routerLink]="['./']" fragment="equipement-details" (click)="scrollToAnchor()">
+                    <div *ngIf="characterTab" class="section-button">Equipement</div>
+                </a>
+                <a [routerLink]="['./']" fragment="biography-details" (click)="scrollToAnchor()">
+                    <div *ngIf="characterTab && characterTab.ownhistory" class="section-button">Biography</div>
+                </a>
+            </div>
+        </nav>-->
+
+
+        <aside id="right-aside">
+            <div class="wrapper" [ngClass.gt-sm]="'fixed'">
+                <div class="character-image">
+
+                    <img src="{{characterImg(characterTab)}}" alt="{{characterTab.image.main.photo}}">
+                </div>
+                <div class="profile">
+                    <div [ngClass.lt-md]="'fixed'" class="edit buttons">
+                        <!--<a [routerLink]="['./']" fragment="nav" (click)="scrollToAnchor()" fxShow.lt-md="true"
+                            fxHide="true" mat-icon-button color="accent">
+                            <mat-icon mat-raised-button class="keyboard_arrow_up mat-icon">
+                                keyboard_arrow_up</mat-icon>
+                        </a>-->
+                        <button *ngIf="!isEditing && checkAdmin(currentAccount)" mat-icon-button color="accent"
+                            (click)="setIsEditing(true,false)">
+                            <mat-icon mat-raised-button class="edit mat-icon">
+                                edit</mat-icon>
+                        </button>
+                        <button [disabled]="!form.valid" *ngIf="isEditing && checkAdmin(currentAccount)" type="submit"
+                            mat-icon-button color="accent">
+                            <mat-icon mat-raised-button class="save mat-icon">save
+                            </mat-icon>
+                        </button>
+                        <button *ngIf="isEditing && checkAdmin(currentAccount)" color="warn" mat-icon-button
+                            (click)="setIsEditing(false,false)">
+                            <mat-icon mat-raised-button class="cancel mat-icon">
+                                cancel</mat-icon>
+                        </button>
+                    </div>
+                    <!--<div class="edit buttons">
+                        <button mat-icon-button color="primary" (click)="setIsEditing(true,false)">
+                            <mat-icon mat-raised-button class="edit mat-icon">
+                                edit</mat-icon>
+                        </button>
+                        <button [disabled]="!form.valid" type="submit" mat-icon-button color="accent">
+                            <mat-icon mat-raised-button class="save mat-icon">save
+                            </mat-icon>
+                        </button>
+                        <button color="warn" mat-icon-button (click)="setIsEditing(false,false)">
+                            <mat-icon mat-raised-button class="cancel mat-icon">
+                                cancel</mat-icon>
+                        </button>
+                    </div>-->
+
+
+                    <ul>
+                        <li *ngIf="isEditingManager()">
+                            <label for="name">Name</label>
+                            <input formControlName="name" *ngIf="isEditing" type="text"
+                                placeholder="{{characterTab.name}}">
+                        </li>
+                        <li *ngIf="isEditingManager()">
+                            <label for="surname">Surname</label>
+                            <input formControlName="surname" *ngIf="isEditing" type="text"
+                                placeholder="{{characterTab.surname}}">
+                        </li>
+                        <li *ngIf="isEditingManagerStatus(characterTab.status) && characterTab">
+                            <label for="status">Status</label>
+                            <select class="status edit select" formControlName="status" *ngIf="isEditing" type="text"
+                                value="characterTab.status">
+                                -<option value="Alive">Alive</option>
+                                <option value="Dead">Dead</option>
+                                <option value="Disapeared">Disapeared</option>
+                                <option value="Unknown">Unknown</option>
+                            </select>
+                            <div *ngIf="!isEditing">{{characterTab.status}}
+                            </div>
+                        </li>
+
+                        <li *ngIf="isEditingManager(characterTab.hundredsoffollowers)">
+                            <label>Positives</label>
+                            <input formControlName="hundredsoffollowers" *ngIf="isEditing" type="text"
+                                placeholder="{{characterTab.hundredsoffollowers}}">
+                            <div *ngIf="!isEditing">{{characterTab.hundredsoffollowers*100}}
+                            </div>
+                        </li>
+                        <li *ngIf="isEditingManager(characterTab.hundredsofhaters)">
+                            <label>Negatives</label>
+                            <input formControlName="hundredsofhaters" *ngIf="isEditing" type="text"
+                                placeholder="{{characterTab.hundredsofhaters}}">
+                            <div *ngIf="!isEditing">{{characterTab.hundredsofhaters*100}}
+                            </div>
+                        </li>
+                        <li *ngIf="isEditingManager(characterTab.totalfame)">
+                            <label>Balance</label>
+                            <div>{{characterTab.totalfame}}
+                            </div>
+                        </li>
+                        <li *ngIf="isEditingManagerUser(characterTab.user)">
+                            <label for="user">User</label>
+                            <input formControlName="user" *ngIf="isEditing" type="text"
+                                placeholder="{{characterTab.user}}">
+                            <div *ngIf="!isEditing">{{characterTab.user}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        <div class="content">
+
+            <mat-tab-group animationDuration="250ms" [backgroundColor]="'primary'" [color]="'accent'">
+                <mat-tab label="Main Details">
+                    <section *ngIf="true" id="main-details" class="main details">
+                        <div class="section-wrapper">
+
+                            <h3 class="str">Specifications</h3>
+                            <ul>
+                                <li *ngIf="isEditingManager(characterTab.career)">
+                                    <label for="career">Career</label>
+                                    <input formControlName="career" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.career}}">
+                                    <div *ngIf="!isEditing">{{characterTab.career}}</div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.powersource)">
+                                    <label for="powersource">Power Source</label>
+                                    <input formControlName="powersource" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.powersource}}">
+                                    <div *ngIf="!isEditing">{{characterTab.powersource}}</div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.powermethod)">
+                                    <label for="powermethod">Power Method</label>
+                                    <input formControlName="powermethod" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.powermethod}}">
+                                    <div *ngIf="!isEditing">{{characterTab.powermethod}}</div>
+                                </li>
+                                <li
+                                    *ngIf="(characterTab.pranalanguages!='none' || characterTab.pranalanguages!=null) && isEditingManager(characterTab.pranalanguages)">
+                                    <label for="pranalanguages">Prana Languages</label>
+                                    <input formControlName="pranalanguages" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.pranalanguages}}">
+                                    <div *ngIf="!isEditing">{{characterTab.pranalanguages}}</div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.specialization)">
+                                    <label for="specialization">Specialization</label>
+                                    <input formControlName="specialization" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.specialization}}">
+                                    <div *ngIf="!isEditing">{{characterTab.specialization}}</div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.pathresearch)">
+                                    <label for="pathresearch">Path Research</label>
+                                    <input formControlName="pathresearch" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.pathresearch}}">
+                                    <div *ngIf="!isEditing">{{characterTab.pathresearch}}</div>
+                                </li>
+
+                                <li *ngIf="isEditingManager(characterTab.numberofawards)">
+                                    <label>Awards</label>
+                                    <input formControlName="numberofawards" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.numberofawards}}">
+                                    <div *ngIf="!isEditing">{{characterTab.numberofawards}}
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.infamy)">
+                                    <label>Infamy</label>
+                                    <input formControlName="infamy" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.infamy}}">
+                                    <div *ngIf="!isEditing">{{characterTab.infamy}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <h3>Afiliations</h3>
+                            <ul>
+                                <li *ngIf="isEditingManager(characterTab.cpp.membership)">
+                                    <label for="cpp">C.P.P.</label>
+                                    <mat-checkbox for="cpp" *ngIf="isEditing" type="checkbox"></mat-checkbox>
+                                    <label *ngIf="isEditing" for="cpprank">Rank</label>
+                                    <input formControlName="cpprank" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.cpp.rank}}">
+                                    <div *ngIf="!isEditing">{{cpp[lang].ranks[characterTab.cpp.rank]}}</div>
+                                </li>
+
+                                <li *ngFor="let afiliation of characterTab.afiliations; let i = index">
+                                    <label *ngIf="isEditing&&isEditingManager(afiliation)">Nº{{i}}
+                                        Afiliation</label>
+                                    <label (click)="onSelectAfiliation(afiliation)"
+                                        *ngIf="isEditingManager(afiliation)&&!isEditing"
+                                        for="afiliation">{{afiliation.link[lang].name}}</label>
+                                    <input formControlName="afiliation.name" *ngIf="isEditing" type="text"
+                                        placeholder="{{afiliation.name}}">
+                                    <label *ngIf="isEditing" for="afiliation.rank">Rank</label><input
+                                        formControlName="afiliation.rank" *ngIf="isEditing" type="text"
+                                        placeholder="{{afiliation.rank}}">
+                                    <div *ngIf="!isEditing">
+                                        {{selectRank(afiliation.link[lang].ranks[characterTab.afiliations[i].rank],characterTab.race.sex)}}
+                                    </div>
+                                </li>
+
+
+
+
+
+                            </ul>
+                        </div>
+                    </section>
+                </mat-tab>
+                <mat-tab label="Personal Details">
+                    <section *ngIf="true" class="personal details">
+
+                        <div class="section-wrapper">
+                            <h3 *ngIf="isEditingManagerMeasurements(characterTab)">Birth Details</h3>
+                            <ul>
+                                
+                                <li *ngIf="isEditingManagerAge(characterTab.age)">
+                                    <label>Age</label>
+                                    <input formControlName="age" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.age}}">
+                                    <div *ngIf="!isEditing">{{characterTab.age}} years old
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.birthdate)">
+                                    <label>Birthday</label>
+                                    <input formControlName="birthdate" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.birthdate}}">
+                                    <div *ngIf="!isEditing">{{formatBirthDay(characterTab.birthdate)}}
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.race.sex)">
+                                    <label>Sex</label>
+                                    <input formControlName="sex" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.race.sex}}">
+                                    <div *ngIf="!isEditing">{{characterTab.race.sex}}
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.ethnicity)">
+                                    <label>Ethnicity</label>
+                                    <input formControlName="birthcity" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.ethnicity}}">
+                                    <div *ngIf="!isEditing">{{characterTab.ethnicity}}</div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.eyecolor) && characterTab.eyecolor[2]">
+                                    <label>Eye Color</label>
+                                    <input formControlName="eyecolor" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.eyecolor}}">
+                                    <!--<div  class="eyecolor" *ngIf="!isEditing">{{characterTab.eyecolor}}
+                                    </div>-->
+                                    
+                                    <!--desde aqui-->
+                                    <div class="eyecolor" [style.background-color]="flatColor" style="height:100%;width:100%;display:flex;flex-flow:row nowrap; justify-content: space-around;align-items:center;position: relative;overflow: hidden;">
+                                        
+                                        <div  style="height:100%;width:100%;box-shadow:inset 0 0 4px 2px rgb(0, 0, 0);z-index:10;position: absolute;"></div>
+                                        <div  style="height:5rem;width:35%;user-select: none;box-shadow: 0 0 20px 6px rgba(0, 0, 0, 0.3);border-radius: 50%;background-color: black;display:flex;align-items: center;justify-content: center;z-index:7;position: absolute;"> 
+                                        </div>
+                                        <div  class="eyecolor-shade" [style.background-color]="shadeColor" style="position:absolute;top:-60%;left:-10%;border-radius: 50%;width: 120%;height: 120%;z-index:6;"></div>
+                                        <div  class="eyecolor-light"[style.background-color]="lightColor"   style="position:absolute;top:62%;left:35%;border-radius: 50%;width: 45%;height: 45%;z-index:5;"></div>
+                                        
+                                        <div style="color:white;width:100%;height:100%;z-index:8">l{{l.toFixed(0)}} · a{{a.toFixed(0)}} · b{{b.toFixed(0)}}</div>
+                                      <!--<div style="position:absolute;top:32%;left:32%;background-color:white;border-radius: 50%;width: 50px;height: 50px;z-index:8;"></div><div style="position:absolute;top:65%;left:65%;background-color:white;border-radius: 50%;width: 20px;height: 20px;z-index:8;"></div> -->  
+                                        
+                                    </div>
+                                    <!--hasta aqui-->
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.birthplace?.city)">
+                                    <label>Birth City</label>
+                                    <input formControlName="birthcity" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.birthplace?.city}}">
+                                    <div *ngIf="!isEditing">{{characterTab.birthplace?.city}}</div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.birthplace?.country)">
+                                    <label>Birth Country</label>
+                                    <input formControlName="birthcity" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.birthplace?.country}}">
+                                    <div *ngIf="!isEditing">{{characterTab.birthplace?.country}}</div>
+                                </li>
+                            </ul>
+                            <h3
+                                *ngIf="isEditingManager(characterTab.based?.country)||isEditingManager(characterTab.based?.street)||isEditingManager(characterTab.nationality)">
+                                Based</h3>
+                            <ul>
+                                <li *ngIf="isEditingManager(characterTab.nationality)">
+                                    <label>Nationality</label>
+                                    <input formControlName="nationality" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.nationality}}">
+                                    <div *ngIf="!isEditing && characterTab.nationality">{{characterTab.nationality}}
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.based?.street)">
+                                    <label>Street</label>
+                                    <input formControlName="street" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.based?.street}}">
+                                    <input formControlName="streetnumber" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.based?.number}}">
+                                    <div *ngIf="!isEditing ">{{characterTab.based?.street}}<span class="black"
+                                            *ngIf="characterTab.based?.number">, {{characterTab.based?.number}}</span>
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.based?.district)">
+                                    <label>District</label>
+                                    <input formControlName="district" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.based?.district}}">
+                                    <div *ngIf="!isEditing">{{characterTab.based?.district}}</div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.based?.district)">
+                                    <label>City</label>
+                                    <input formControlName="basedcity" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.based?.city}}">
+                                    <div *ngIf="!isEditing">{{characterTab.based?.city}}</div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.based?.prefacture)">
+                                    <label>Prefacture</label>
+                                    <input formControlName="prefacture" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.based?.prefacture}}">
+                                    <div *ngIf="!isEditing">{{characterTab.based?.prefacture}}</div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.based?.district)">
+                                    <label>Country</label>
+                                    <input formControlName="basedcountry" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.based?.country}}">
+                                    <div *ngIf="!isEditing">{{characterTab.based?.country}}</div>
+                                </li>
+                            </ul>
+                            <h3
+                                *ngIf="isEditingManager(characterTab.honorableactions)||isEditingManager(characterTab.cowardactions)||isEditingManager(characterTab.phobias)||isEditingManager(characterTab.notes)||isEditingManagerAdmin(characterTab.adminnotes)||isEditingManagerAdmin(characterTab.alignement)">
+                                Other Details</h3>
+                            <ul>
+                                <li *ngIf="isEditingManager(characterTab.honorableactions)">
+                                    <label>Honorable Actions</label>
+                                    <input formControlName="honorableactions" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.honorableactions}}">
+                                    <div *ngIf="!isEditing">{{characterTab.honorableactions}}
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.cowardactions)">
+                                    <label>Coward Actions</label>
+                                    <input formControlName="cowardactions" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.cowardactions}}">
+                                    <div *ngIf="!isEditing">{{characterTab.cowardactions}}
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.phobias[0])" class="full width li">
+                                    <label>Phobias</label>
+                                    <input formControlName="phobias" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.phobias}}">
+                                    <div *ngIf="!isEditing&&characterTab.phobias">{{characterTab.phobias}}
+                                    </div>
+                                </li>
+                                <li class="full width li"
+                                    *ngIf="!isEditingManager(characterTab.contacts)||characterTab.contacts.lenght>0">
+                                    <label>Contacts</label>
+                                    <textarea formControlName="contacts" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.contacts}}"></textarea>
+                                    <div *ngIf="!isEditing">{{characterTab.contacts}}
+                                    </div>
+                                </li>
+                                <li class="full width li" *ngIf="isEditingManager(characterTab.notes)">
+                                    <label>Notes</label>
+                                    <textarea formControlName="notes" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.notes}}"></textarea>
+                                    <div *ngIf="!isEditing">{{characterTab.notes}}
+                                    </div>
+                                </li>
+                                <li class="full width li" *ngIf="isEditingManagerAdmin(characterTab.adminnotes)">
+                                    <label>Notes (Admin)</label>
+                                    <textarea formControlName="adminnotes" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.adminnotes}}"></textarea>
+                                    <div *ngIf="!isEditing">{{characterTab.adminnotes}}
+                                    </div>
+                                </li>
+                                <li class="full width li" *ngIf="isEditingManagerAdmin(characterTab.alignement)">
+                                    <label>Alignement (Admin)</label>
+                                    <textarea formControlName="alignement" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.alignement}}"></textarea>
+                                    <div *ngIf="!isEditing">{{characterTab.alignement}}
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <h3 *ngIf="isEditingManagerMeasurements(characterTab)">Measurements</h3>
+                            <ul>
+                                <li *ngIf="isEditingManager(characterTab.height)">
+                                    <label>Height</label>
+                                    <input formControlName="height" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.height}}">
+                                    <div *ngIf="!isEditing">{{characterTab.height|number:'1.0-1'}} cm
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.weight)">
+                                    <label>Weight</label>
+                                    <input formControlName="weight" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.weight}} in kg">
+                                    <div *ngIf="!isEditing">{{characterTab.weight|number:'1.0-1'}} kg
+                                    </div>
+                                </li>
+                                
+                                <li *ngIf="isEditingManager(characterTab.chest)">
+                                    <label>Chest</label>
+                                    <input formControlName="chest" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.chest}}">
+                                    <div *ngIf="!isEditing">
+                                        {{bulge(characterTab.race)+(characterTab.chest|number:'1.0-1')}}
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.waist)">
+                                    <label>Waist</label>
+                                    <input formControlName="waist" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.waist}}">
+                                    <div *ngIf="!isEditing">{{characterTab.waist|number:'1.0-1'}}
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.hip)">
+                                    <label>Hip</label>
+                                    <input formControlName="hip" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.hip}}">
+                                    <div *ngIf="!isEditing">{{characterTab.hip|number:'1.0-1'}}
+                                    </div>
+                                </li>
+                                <li *ngIf="isEditingManager(characterTab.feet)">
+                                    <label>Feet</label>
+                                    <input formControlName="feet" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.feet}}">
+                                    <div *ngIf="!isEditing">{{characterTab.feet|number:'1.0-1'}}
+                                    </div>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </section>
+                </mat-tab>
+                <mat-tab label="Stats">
+                    <section id="stats-details" class="stat details left">
+                        <div class="section-wrapper">
+                            <div>
+                                <div *ngIf="characterTab.level">
+                                    <label>Lv</label>
+                                    <input formControlName="level" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.level}}">
+                                    <div *ngIf="!isEditing">{{characterTab.level}}</div>
+                                </div>
+                                <div *ngIf="false">
+                                    <label>XP</label>
+                                    <input formControlName="xpobtained" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.xpobtained}}">
+                                    <div *ngIf="!isEditing">{{characterTab.xpobtained}}</div>
+                                </div>
+                                <div>
+                                    <div>Total SP</div>
+                                    <div>{{characterTab.level*15+90}}</div>
+                                </div>
+                                <div>
+                                    <div>Available SP</div>
+                                    <div>
+                                        {{90+(characterTab.level*15)-((sumFields(characterTab,'stats','str')['lvl']+sumFields(characterTab,'stats','agi')['lvl']+sumFields(characterTab,'stats','dex')['lvl']+sumFields(characterTab,'stats','vit')['lvl']+sumFields(characterTab,'stats','int')['lvl']+sumFields(characterTab,'stats','per')['lvl']+sumFields(characterTab,'stats','wil')['lvl']+sumFields(characterTab,'stats','car')['lvl']+sumFields(characterTab,'stats','luk')['lvl']))}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul id="stats-half" class="half">
+                                <li class="half">
+                                    <div>HP</div>
+                                    <div>{{150+sumFields(characterTab,'stats','vit')['total']*4}}</div>
+                                </li>
+                                <li class="half">
+                                    <div>EP</div>
+                                    <div>
+                                        {{((30+(sumFields(characterTab,'stats','str')['total']+sumFields(characterTab,'stats','agi')['total']+sumFields(characterTab,'stats','dex')['total']+sumFields(characterTab,'stats','vit')['total']+sumFields(characterTab,'stats','int')['total']+sumFields(characterTab,'stats','per')['total']+sumFields(characterTab,'stats','wil')['total']+sumFields(characterTab,'stats','car')['total']+sumFields(characterTab,'stats','luk')['total'])/9).toFixed(0))}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="str">
+                                    <label>STR</label>
+                                    <input formControlName="statsstr" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.statsstr}}">
+                                    <div *ngIf="!isEditing">{{sumFields(characterTab,'stats','str')['total']}}</div>
+                                </li>
+                                <li class="agi">
+                                    <label>AGI</label>
+                                    <input formControlName="statsagi" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.statsagi}}">
+                                    <div *ngIf="!isEditing">{{sumFields(characterTab,'stats','agi')['total']}}</div>
+                                </li>
+                                <li class="dex">
+                                    <label>DEX</label>
+                                    <input formControlName="statsdex" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.statsdex}}">
+                                    <div *ngIf="!isEditing">{{sumFields(characterTab,'stats','dex')['total']}}</div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="int">
+                                    <label>INT</label>
+                                    <input formControlName="statsint" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.statsint}}">
+                                    <div *ngIf="!isEditing">{{sumFields(characterTab,'stats','int')['total']}}</div>
+                                </li>
+                                <li class="per">
+                                    <label>PER</label>
+                                    <input formControlName="statsper" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.statsper}}">
+                                    <div *ngIf="!isEditing">{{sumFields(characterTab,'stats','per')['total']}}</div>
+                                </li>
+                                <li class="wil">
+                                    <label>WIL</label>
+                                    <input formControlName="statswil" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.statswil}}">
+                                    <div *ngIf="!isEditing">{{sumFields(characterTab,'stats','wil')['total']}}</div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="vit">
+                                    <label>VIT</label>
+                                    <input formControlName="statsvit" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.statsvit}}">
+                                    <div *ngIf="!isEditing">{{sumFields(characterTab,'stats','vit')['total']}}</div>
+                                </li>
+                                <li class="car">
+                                    <label>CAR</label>
+                                    <input formControlName="statscar" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.statscar}}">
+                                    <div *ngIf="!isEditing">{{sumFields(characterTab,'stats','car')['total']}}</div>
+                                </li>
+                                <li class="luk">
+                                    <label>LUK</label>
+                                    <input formControlName="statsluk" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.statsluk}}">
+                                    <div *ngIf="!isEditing">{{sumFields(characterTab,'stats','luk')['total']}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </mat-tab>
+                <mat-tab label="Modifiers" class="section-button">
+                    <section id="modifiers-details" class="modifier details right">
+                        <div class="section-wrapper">
+
+                            <ul>
+                                <li>
+                                    <div>Atk</div>
+                                    <div><span class="black"
+                                            *ngIf="characterTab.equipement?.rhand?.modifiers.atk||characterTab.equipement?.lhand?.modifiers.atk">({{(sumFields(characterTab,'stats','str')['total']*2)+sumFields(characterTab,'modifiers','atk')['equip']-characterTab.equipement?.rhand?.modifiers.atk-characterTab.equipement?.lhand?.modifiers.atk}})</span>
+                                        {{(sumFields(characterTab,'stats','str')['total']*2)+sumFields(characterTab,'modifiers','atk')['equip']}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>R.Atk</div>
+                                    <div><span class="black"
+                                            *ngIf="characterTab.equipement?.rhand?.modifiers.ratk||characterTab.equipement?.lhand?.modifiers.ratk">({{(sumFields(characterTab,'stats','dex')['total']*2)+sumFields(characterTab,'modifiers','ratk')['equip']-characterTab.equipement?.rhand?.modifiers.ratk-characterTab.equipement?.lhand?.modifiers.ratk}})</span>{{(sumFields(characterTab,'stats','dex')['total']*2)+sumFields(characterTab,'modifiers','ratk')['equip']}}
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div>M.Atk</div>
+                                    <div><span class="black"
+                                            *ngIf="characterTab.equipement?.rhand?.modifiers.matk||characterTab.equipement?.lhand?.modifiers.matk">({{(sumFields(characterTab,'stats','int')['total']*2)+sumFields(characterTab,'modifiers','matk')['equip']-characterTab.equipement?.rhand?.modifiers.matk-characterTab.equipement?.lhand?.modifiers.matk}})</span>{{(sumFields(characterTab,'stats','int')['total']*2)+sumFields(characterTab,'modifiers','matk')['equip']}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>P.Atk</div>
+                                    <div><span class="black"
+                                            *ngIf="characterTab.equipement?.rhand?.modifiers.psyatk||characterTab.equipement?.lhand?.modifiers.psyatk">({{(sumFields(characterTab,'stats','wil')['total']*2)+sumFields(characterTab,'modifiers','psyatk')['equip']-characterTab.equipement?.rhand?.modifiers.psyatk-characterTab.equipement?.lhand?.modifiers.psyatk}})</span>{{(sumFields(characterTab,'stats','wil')['total']*2)+sumFields(characterTab,'modifiers','psyatk')['equip']}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Focus</div>
+                                    <div>
+                                        {{(((sumFields(characterTab,'stats','int')['total'])/(sumFields(characterTab,'stats','int')['total']+100))*100).toFixed(1)+sumFields(characterTab,'modifiers','focus')['equip']}}%
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div>Hit</div>
+                                    <div>
+                                        {{(sumFields(characterTab,'stats','dex')['total']+sumFields(characterTab,'stats','per')['total'])/10+sumFields(characterTab,'modifiers','hit')['equip']}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Crit</div>
+                                    <div>
+                                        {{(((sumFields(characterTab,'stats','luk')['total'])/(sumFields(characterTab,'stats','luk')['total']+100))*100).toFixed(1)+sumFields(characterTab,'modifiers','critrate')['equip']}}%
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Aspd</div>
+                                    <div>
+                                        {{((sumFields(characterTab,'stats','agi')['total'])/100+2).toFixed(1)+sumFields(characterTab,'modifiers','aspd')['equip']}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <div>Block</div>
+                                    <div>
+                                        {{(sumFields(characterTab,'stats','dex')['total']+sumFields(characterTab,'stats','str')['total'])/10+sumFields(characterTab,'modifiers','block')['equip']}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Flee</div>
+                                    <div>
+                                        {{(sumFields(characterTab,'stats','agi')['total']+sumFields(characterTab,'stats','per')['total'])/10+sumFields(characterTab,'modifiers','flee')['equip']}}
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div>Def</div>
+                                    <div>
+                                        {{(((sumFields(characterTab,'stats','vit')['total'])/(sumFields(characterTab,'stats','vit')['total']+100))*100).toFixed(1)+sumFields(characterTab,'modifiers','def')['equip']}}%
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Psy</div>
+                                    <div>
+                                        {{(((sumFields(characterTab,'stats','wil')['total'])/(sumFields(characterTab,'stats','wil')['total']+100))*100).toFixed(1)+sumFields(characterTab,'modifiers','psy')['equip']}}%
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Crit</div>
+                                    <div>
+                                        {{(((sumFields(characterTab,'stats','luk')['total'])/(sumFields(characterTab,'stats','luk')['total']+100))*100).toFixed(1)+sumFields(characterTab,'modifiers','critrate')['equip']}}%
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <div>Can</div>
+                                    <div>
+                                        {{(sumFields(characterTab,'stats','vit')['total'])/5+sumFields(characterTab,'modifiers','can')['equip']}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Ini</div>
+                                    <div>
+                                        {{(sumFields(characterTab,'stats','agi')['total'])/10+sumFields(characterTab,'modifiers','ini')['equip']}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Mspd</div>
+                                    <div>
+                                        {{(2+(sumFields(characterTab,'stats','agi')['total'])/50).toFixed(1)+sumFields(characterTab,'modifiers','mspd')['equip']}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Sanity
+                                    </div>
+                                    <div>
+                                        {{(((sumFields(characterTab,'stats','wil')['total'])/(sumFields(characterTab,'stats','wil')['total']+100))*50+50).toFixed(1)+sumFields(characterTab,'modifiers','sanity')['equip']}}%
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Sympathy</div>
+                                    <div>
+                                        {{(((sumFields(characterTab,'stats','car')['total'])/(sumFields(characterTab,'stats','car')['total']+100))*100).toFixed(1)+sumFields(characterTab,'modifiers','sympathy')['equip']}}%
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </section>
+                </mat-tab>
+                <mat-tab label="Aptitudes" *ngIf="characterTab">
+                    <section id="aptitudes-details" *ngIf="characterTab" class="aptitudes details">
+                        <div class="section-wrapper">
+
+                            <div *ngIf="characterTab.level">
+                                <div>Lv</div>
+                                <div>{{characterTab.level}}</div>
+                            </div>
+                            <div *ngIf="false">
+                                <div>XP</div>
+                                <div>{{characterTab.xpobtained}}</div>
+                            </div>
+                            <div>
+                                <div>Total AP</div>
+                                <div>{{25+5*(characterTab.level-1)}}</div>
+                            </div>
+                            <div>
+                                <div>Available AP
+                                </div>
+                                <div>
+                                    {{(25+5*(characterTab.level-1))-(sumFields(characterTab,'aptitudes','swimm')['lvl']+sumFields(characterTab,'aptitudes','throw')['lvl']+sumFields(characterTab,'aptitudes','pull')['lvl']+sumFields(characterTab,'aptitudes','charge')['lvl']+sumFields(characterTab,'aptitudes','push')['lvl']+sumFields(characterTab,'aptitudes','equilibrium')['lvl']+sumFields(characterTab,'aptitudes','somersault')['lvl']+sumFields(characterTab,'aptitudes','jump')['lvl']+sumFields(characterTab,'aptitudes','climb')['lvl']+sumFields(characterTab,'aptitudes','scape')['lvl']+sumFields(characterTab,'aptitudes','flexibility')['lvl']+sumFields(characterTab,'aptitudes','lock')['lvl']+sumFields(characterTab,'aptitudes','searching')['lvl']+sumFields(characterTab,'aptitudes','scapology')['lvl']+sumFields(characterTab,'aptitudes','ride')['lvl']+sumFields(characterTab,'aptitudes','stealth')['lvl']+sumFields(characterTab,'aptitudes','hands')['lvl']+sumFields(characterTab,'aptitudes','rope')['lvl']+sumFields(characterTab,'aptitudes','mechanisms')['lvl']+sumFields(characterTab,'aptitudes','mountains')['lvl']+sumFields(characterTab,'aptitudes','intimidate')['lvl']+sumFields(characterTab,'aptitudes','weatherresist')['lvl']+sumFields(characterTab,'aptitudes','breath')['lvl']+sumFields(characterTab,'aptitudes','inmunity')['lvl']+sumFields(characterTab,'aptitudes','psicology')['lvl']+sumFields(characterTab,'aptitudes','decieve')['lvl']+sumFields(characterTab,'aptitudes','strategy')['lvl']+sumFields(characterTab,'aptitudes','generalculture')['lvl']+sumFields(characterTab,'aptitudes','criptography')['lvl']+sumFields(characterTab,'aptitudes','geography')['lvl']+sumFields(characterTab,'aptitudes','history')['lvl']+sumFields(characterTab,'aptitudes','legislation')['lvl']+sumFields(characterTab,'aptitudes','religion')['lvl']+sumFields(characterTab,'aptitudes','medicine')['lvl']+sumFields(characterTab,'aptitudes','apresial')['lvl']+sumFields(characterTab,'aptitudes','technologies')['lvl']+sumFields(characterTab,'aptitudes','magicitems')['lvl']+sumFields(characterTab,'aptitudes','spells')['lvl']+sumFields(characterTab,'aptitudes','sight')['lvl']+sumFields(characterTab,'aptitudes','hear')['lvl']+sumFields(characterTab,'aptitudes','smell')['lvl']+sumFields(characterTab,'aptitudes','cook')['lvl']+sumFields(characterTab,'aptitudes','empathy')['lvl']+sumFields(characterTab,'aptitudes','orientation')['lvl']+sumFields(characterTab,'aptitudes','smelldanger')['lvl']+sumFields(characterTab,'aptitudes','virtuosity')['lvl']+sumFields(characterTab,'aptitudes','faith')['lvl']+sumFields(characterTab,'aptitudes','bravery')['lvl']+sumFields(characterTab,'aptitudes','stiffness')['lvl']+sumFields(characterTab,'aptitudes','resilience')['lvl']+sumFields(characterTab,'aptitudes','selfcontrol')['lvl']+sumFields(characterTab,'aptitudes','patience')['lvl']+sumFields(characterTab,'aptitudes','leadership')['lvl']+sumFields(characterTab,'aptitudes','diplomacy')['lvl']+sumFields(characterTab,'aptitudes','performance')['lvl']+sumFields(characterTab,'aptitudes','seduce')['lvl']+sumFields(characterTab,'aptitudes','animaltreatment')['lvl']+sumFields(characterTab,'aptitudes','aesthetic')['lvl']+sumFields(characterTab,'aptitudes','cuteness')['lvl']+sumFields(characterTab,'aptitudes','coincidence')['lvl']+sumFields(characterTab,'aptitudes','games')['lvl']+sumFields(characterTab,'aptitudes','opportunism')['lvl'])}}
+                                </div>
+                            </div>
+                            <ul>
+                                <h3 class="str">STR</h3>
+                                <li class="str">
+                                    <label>swimm</label>
+                                    <input formControlName="aptitudesswimm" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesswimm}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','str')['total'],sumFields(characterTab,'aptitudes','swimm')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="str">
+                                    <label>throw</label>
+                                    <input formControlName="aptitudesthrow" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesthrow}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','str')['total'],sumFields(characterTab,'aptitudes','throw')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="str">
+                                    <label>pull</label>
+                                    <input formControlName="aptitudespull" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudespull}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','str')['total'],sumFields(characterTab,'aptitudes','pull')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="str">
+                                    <label>charge</label>
+                                    <input formControlName="aptitudescharge" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudescharge}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','str')['total'],sumFields(characterTab,'aptitudes','charge')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="str">
+                                    <label>push</label>
+                                    <input formControlName="aptitudespush" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudespush}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','str')['total'],sumFields(characterTab,'aptitudes','push')['total'])}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h3 class="agi">AGI</h3>
+                                <li class="agi">
+                                    <label>equilibrium</label>
+                                    <input formControlName="aptitudesequilibrium" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesequilibrium}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','agi')['total'],sumFields(characterTab,'aptitudes','equilibrium')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="agi">
+                                    <label>Somersault</label>
+                                    <input formControlName="aptitudessomersault" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudessomersault}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','agi')['total'],sumFields(characterTab,'aptitudes','somersault')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="agi">
+                                    <label>jump</label>
+                                    <input formControlName="aptitudesjump" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesjump}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','agi')['total'],sumFields(characterTab,'aptitudes','jump')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="agi">
+                                    <label>climb</label>
+                                    <input formControlName="aptitudesclimb" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesclimb}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','agi')['total'],sumFields(characterTab,'aptitudes','climb')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="agi">
+                                    <label>scape</label>
+                                    <input formControlName="aptitudesscape" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesscape}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','agi')['total'],sumFields(characterTab,'aptitudes','scape')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="agi">
+                                    <label>flexibility</label>
+                                    <input formControlName="aptitudesflexibility" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesflexibility}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','agi')['total'],sumFields(characterTab,'aptitudes','flexibility')['total'])}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h3 class="dex">DEX</h3>
+                                <li class="dex">
+                                    <label>lock</label>
+                                    <input formControlName="aptitudeslock" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudeslock}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','dex')['total'],sumFields(characterTab,'aptitudes','lock')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="dex">
+                                    <label>searching</label>
+                                    <input formControlName="aptitudessearching" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudessearching}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','dex')['total'],sumFields(characterTab,'aptitudes','searching')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="dex">
+                                    <label>scapology</label>
+                                    <input formControlName="aptitudesscapology" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesscapology}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','dex')['total'],sumFields(characterTab,'aptitudes','scapology')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="dex">
+                                    <label>ride</label>
+                                    <input formControlName="aptitudesride" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesride}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','dex')['total'],sumFields(characterTab,'aptitudes','ride')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="dex">
+                                    <label>stealth</label>
+                                    <input formControlName="aptitudesstealth" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesstealth}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','dex')['total'],sumFields(characterTab,'aptitudes','stealth')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="dex">
+                                    <label>hands</label>
+                                    <input formControlName="aptitudeshands" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudeshands}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','dex')['total'],sumFields(characterTab,'aptitudes','hands')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="dex">
+                                    <label>rope</label>
+                                    <input formControlName="aptitudesrope" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesrope}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','dex')['total'],sumFields(characterTab,'aptitudes','rope')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="dex">
+                                    <label>mechanisms</label>
+                                    <input formControlName="aptitudesmechanisms" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesmechanisms}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','dex')['total'],sumFields(characterTab,'aptitudes','mechanisms')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="dex">
+                                    <label>mountains</label>
+                                    <input formControlName="aptitudesmountains" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesmountains}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','dex')['total'],sumFields(characterTab,'aptitudes','mountains')['total'])}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h3 class="int">INT</h3>
+                                <li class="int">
+                                    <label>psicology</label>
+                                    <input formControlName="aptitudespsicology" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudespsicology}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','psicology')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>decieve</label>
+                                    <input formControlName="aptitudesdecieve" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesdecieve}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','decieve')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>strategy</label>
+                                    <input formControlName="aptitudesstrategy" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesstrategy}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','strategy')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>general culture</label>
+                                    <input formControlName="aptitudesgeneralculture" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesgeneralculture}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','generalculture')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>criptography</label>
+                                    <input formControlName="aptitudescriptography" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudescriptography}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','criptography')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>geography</label>
+                                    <input formControlName="aptitudesgeography" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesgeography}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','geography')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>history</label>
+                                    <input formControlName="aptitudeshistory" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudeshistory}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','history')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>legislation</label>
+                                    <input formControlName="aptitudeslegislation" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudeslegislation}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','legislation')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>religion</label>
+                                    <input formControlName="aptitudesreligion" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesreligion}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','religion')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>medicine</label>
+                                    <input formControlName="aptitudesmedicine" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesmedicine}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','medicine')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>apresial</label>
+                                    <input formControlName="aptitudesapresial" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesapresial}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','apresial')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>technologies</label>
+                                    <input formControlName="aptitudestechnologies" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudestechnologies}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','technologies')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>magic items</label>
+                                    <input formControlName="aptitudesmagicitems" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesmagicitems}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','magicitems')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="int">
+                                    <label>spells</label>
+                                    <input formControlName="aptitudesspells" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesspells}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','int')['total'],sumFields(characterTab,'aptitudes','spells')['total'])}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h3 class="per">PER</h3>
+                                <li class="per">
+                                    <label>sight</label>
+                                    <input formControlName="aptitudessight" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudessight}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','per')['total'],sumFields(characterTab,'aptitudes','sight')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="per">
+                                    <label>hear</label>
+                                    <input formControlName="aptitudeshear" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudeshear}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','per')['total'],sumFields(characterTab,'aptitudes','hear')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="per">
+                                    <label>smell</label>
+                                    <input formControlName="aptitudessmell" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudessmell}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','per')['total'],sumFields(characterTab,'aptitudes','smell')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="per">
+                                    <label>cook</label>
+                                    <input formControlName="aptitudescook" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudescook}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','per')['total'],sumFields(characterTab,'aptitudes','cook')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="per">
+                                    <label>empathy</label>
+                                    <input formControlName="aptitudesempathy" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesempathy}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','per')['total'],sumFields(characterTab,'aptitudes','empathy')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="per">
+                                    <label>orientation</label>
+                                    <input formControlName="aptitudesorientation" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesorientation}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','per')['total'],sumFields(characterTab,'aptitudes','orientation')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="per">
+                                    <label>smell danger</label>
+                                    <input formControlName="aptitudessmelldanger" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudessmelldanger}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','per')['total'],sumFields(characterTab,'aptitudes','smelldanger')['total'])}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h3 class="wil">WIL</h3>
+                                <li class="wil">
+                                    <label>virtuosity</label>
+                                    <input formControlName="aptitudesvirtuosity" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesvirtuosity}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','wil')['total'],sumFields(characterTab,'aptitudes','virtuosity')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="wil">
+                                    <label>faith</label>
+                                    <input formControlName="aptitudesfaith" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesfaith}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','wil')['total'],sumFields(characterTab,'aptitudes','faith')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="wil">
+                                    <label>bravery</label>
+                                    <input formControlName="aptitudesbravery" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesbravery}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','wil')['total'],sumFields(characterTab,'aptitudes','bravery')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="wil">
+                                    <label>stiffness</label>
+                                    <input formControlName="aptitudesstiffness" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesstiffness}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','wil')['total'],sumFields(characterTab,'aptitudes','stiffness')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="wil">
+                                    <label>resilience</label>
+                                    <input formControlName="aptitudesresilience" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesresilience}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','wil')['total'],sumFields(characterTab,'aptitudes','resilience')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="wil">
+                                    <label>self control</label>
+                                    <input formControlName="aptitudesselfcontrol" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesselfcontrol}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','wil')['total'],sumFields(characterTab,'aptitudes','selfcontrol')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="wil">
+                                    <label>patience</label>
+                                    <input formControlName="aptitudespatience" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudespatience}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','wil')['total'],sumFields(characterTab,'aptitudes','patience')['total'])}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h3 class="vit">VIT</h3>
+                                <li class="vit">
+                                    <label>intimidate</label>
+                                    <input formControlName="aptitudesintimidate" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesintimidate}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','vit')['total'],sumFields(characterTab,'aptitudes','intimidate')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="vit">
+                                    <label>weatherresist</label>
+                                    <input formControlName="aptitudesweatherresist" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesweatherresist}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','vit')['total'],sumFields(characterTab,'aptitudes','weatherresist')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="vit">
+                                    <label>breath</label>
+                                    <input formControlName="aptitudesbreath" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesbreath}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','vit')['total'],sumFields(characterTab,'aptitudes','breath')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="vit">
+                                    <label>inmunity</label>
+                                    <input formControlName="aptitudesinmunity" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesinmunity}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','vit')['total'],sumFields(characterTab,'aptitudes','inmunity')['total'])}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h3 class="car">CAR</h3>
+                                <li class="car">
+                                    <label>leadership</label>
+                                    <input formControlName="aptitudesleadership" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesleadership}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','car')['total'],sumFields(characterTab,'aptitudes','leadership')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="car">
+                                    <label>diplomacy</label>
+                                    <input formControlName="aptitudesdiplomacy" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesdiplomacy}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','car')['total'],sumFields(characterTab,'aptitudes','diplomacy')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="car">
+                                    <label>performance</label>
+                                    <input formControlName="aptitudesperformance" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesperformance}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','car')['total'],sumFields(characterTab,'aptitudes','performance')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="car">
+                                    <label>seduce</label>
+                                    <input formControlName="aptitudesseduce" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesseduce}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','car')['total'],sumFields(characterTab,'aptitudes','seduce')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="car">
+                                    <label>animal treatment</label>
+                                    <input formControlName="aptitudesanimaltreatment" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesanimaltreatment}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','car')['total'],sumFields(characterTab,'aptitudes','animaltreatment')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="car">
+                                    <label>aesthetic</label>
+                                    <input formControlName="aptitudesaesthetic" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesaesthetic}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','car')['total'],sumFields(characterTab,'aptitudes','aesthetic')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="car">
+                                    <label>cuteness</label>
+                                    <input formControlName="aptitudescuteness" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudescuteness}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','car')['total'],sumFields(characterTab,'aptitudes','cuteness')['total'])}}
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <h3 class="luk">LUK</h3>
+                                <li class="luk">
+                                    <label>coincidence</label>
+                                    <input formControlName="aptitudescoincidence" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudescoincidence}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','luk')['total'],sumFields(characterTab,'aptitudes','coincidence')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="luk">
+                                    <label>games</label>
+                                    <input formControlName="aptitudesgames" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesgames}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','luk')['total'],sumFields(characterTab,'aptitudes','games')['total'])}}
+                                    </div>
+                                </li>
+                                <li class="luk">
+                                    <label>opportunism</label>
+                                    <input formControlName="aptitudesopportunism" *ngIf="isEditing" type="text"
+                                        placeholder="{{characterTab.aptitudesopportunism}}">
+                                    <div *ngIf="!isEditing">
+                                        {{aptitudesCalc(sumFields(characterTab,'stats','luk')['total'],sumFields(characterTab,'aptitudes','opportunism')['total'])}}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </mat-tab>
+                <mat-tab label="Equipement" *ngIf="characterTab">
+                    <section id="equipement-details" *ngIf="characterTab" class="equipement details">
+                        <div class="section-wrapper">
+
+                            <div class="equipement-wrapper">
+                                <div [ngClass]="[returnValue(characterTab,'rhand','rarity'),'item-profile']"
+                                    hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(characterTab.equipement?.rhand)"
+                                    (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url(' + equipImg(characterTab,'rhand') + ')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div *ngIf="characterTab.equipement?.rhand" class="item-details"><span
+                                                [class]="returnValue(characterTab,'rhand','rarity')">{{characterTab.equipement?.rhand?.name}}</span>
+                                            <br> {{characterTab.equipement?.rhand?.ilvl}}
+                                        </div>
+                                    </a>
+                                    <div class="tooltip-window" *ngIf="characterTab.equipement?.rhand">
+                                        <span
+                                            [class]="characterTab.equipement?.rhand?.rarity">{{characterTab.equipement?.rhand?.name}}
+                                        </span> <br>
+                                        Item level: {{characterTab.equipement?.rhand?.ilvl}} <br>
+                                        <div *ngFor="let stat of characterTab.equipement?.rhand?.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let modifier of characterTab.equipement?.rhand?.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let aptitude of characterTab.equipement?.rhand?.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of characterTab.equipement?.rhand?.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [ngClass]="[returnValue(characterTab,'lhand','rarity'),'item-profile']"
+                                    hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(characterTab.equipement?.lhand)"
+                                    (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url(' + equipImg(characterTab,'lhand') + ')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div *ngIf="characterTab.equipement?.lhand" class="item-details"><span
+                                                [class]="returnValue(characterTab,'lhand','rarity')">{{characterTab.equipement?.lhand?.name}}</span>
+                                            <br> {{characterTab.equipement?.lhand?.ilvl}}
+                                        </div>
+                                    </a>
+                                    <div class="tooltip-window" *ngIf="characterTab.equipement?.lhand">
+                                        <span
+                                            [class]="characterTab.equipement?.lhand?.rarity">{{characterTab.equipement?.lhand?.name}}
+                                        </span> <br>
+                                        Item level: {{characterTab.equipement?.lhand?.ilvl}} <br>
+                                        <div *ngFor="let stat of characterTab.equipement?.lhand?.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let modifier of characterTab.equipement?.lhand?.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let aptitude of characterTab.equipement?.lhand?.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of characterTab.equipement?.lhand?.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [ngClass]="[returnValue(characterTab,'head','rarity'),'item-profile']"
+                                    hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(characterTab.equipement?.head)"
+                                    (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url(' + equipImg(characterTab,'head') + ')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div *ngIf="characterTab.equipement?.head" class="item-details"><span
+                                                [class]="returnValue(characterTab,'head','rarity')">{{characterTab.equipement?.head?.name}}</span>
+                                            <br> {{characterTab.equipement?.head?.ilvl}}
+                                        </div>
+                                    </a>
+                                    <div class="tooltip-window" *ngIf="characterTab.equipement?.head">
+                                        <span
+                                            [class]="characterTab.equipement?.head?.rarity">{{characterTab.equipement?.head?.name}}
+                                        </span> <br>
+                                        Item level: {{characterTab.equipement?.head?.ilvl}} <br>
+                                        <div *ngFor="let stat of characterTab.equipement?.head?.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div *ngFor="let modifier of characterTab.equipement?.head?.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div *ngFor="let aptitude of characterTab.equipement?.head?.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of characterTab.equipement?.head?.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [ngClass]="[returnValue(characterTab,'armor','rarity'),'item-profile']"
+                                    hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(characterTab.equipement?.armor)"
+                                    (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url(' + equipImg(characterTab,'armor') + ')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div *ngIf="characterTab.equipement?.armor" class="item-details"><span
+                                                [class]="returnValue(characterTab,'armor','rarity')">{{characterTab.equipement?.armor?.name}}</span>
+                                            <br> {{characterTab.equipement?.armor?.ilvl}}
+                                        </div>
+                                    </a>
+                                    <div class="tooltip-window" *ngIf="characterTab.equipement?.armor">
+                                        <span
+                                            [class]="characterTab.equipement?.armor?.rarity">{{characterTab.equipement?.armor?.name}}
+                                        </span> <br>
+                                        Item level: {{characterTab.equipement?.armor?.ilvl}} <br>
+                                        <div *ngFor="let stat of characterTab.equipement?.armor?.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let modifier of characterTab.equipement?.armor?.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let aptitude of characterTab.equipement?.armor?.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of characterTab.equipement?.armor?.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [ngClass]="[returnValue(characterTab,'hands','rarity'),'item-profile']"
+                                    hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(characterTab.equipement?.hands)"
+                                    (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url(' + equipImg(characterTab,'hands') + ')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div *ngIf="characterTab.equipement?.hands" class="item-details"><span
+                                                [class]="returnValue(characterTab,'hands','rarity')">{{characterTab.equipement?.hands?.name}}</span>
+                                            <br> {{characterTab.equipement?.hands?.ilvl}}
+                                        </div>
+                                    </a>
+                                    <div class="tooltip-window" *ngIf="characterTab.equipement?.hands">
+                                        <span
+                                            [class]="characterTab.equipement?.hands?.rarity">{{characterTab.equipement?.hands?.name}}
+                                        </span> <br>
+                                        Item level: {{characterTab.equipement?.hands?.ilvl}} <br>
+                                        <div *ngFor="let stat of characterTab.equipement?.hands?.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let modifier of characterTab.equipement?.hands?.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let aptitude of characterTab.equipement?.hands?.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of characterTab.equipement?.hands?.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [ngClass]="[returnValue(characterTab,'legs','rarity'),'item-profile']"
+                                    hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(characterTab.equipement?.legs)"
+                                    (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url(' + equipImg(characterTab,'legs') + ')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div *ngIf="characterTab.equipement?.legs" class="item-details"><span
+                                                [class]="returnValue(characterTab,'legs','rarity')">{{characterTab.equipement?.legs?.name}}</span>
+                                            <br> {{characterTab.equipement?.legs?.ilvl}}
+                                        </div>
+                                    </a>
+                                    <div class="tooltip-window" *ngIf="characterTab.equipement?.legs">
+                                        <span
+                                            [class]="characterTab.equipement?.legs?.rarity">{{characterTab.equipement?.legs?.name}}
+                                        </span> <br>
+                                        Item level: {{characterTab.equipement?.legs?.ilvl}} <br>
+                                        <div *ngFor="let stat of characterTab.equipement?.legs?.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div *ngFor="let modifier of characterTab.equipement?.legs?.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div *ngFor="let aptitude of characterTab.equipement?.legs?.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of characterTab.equipement?.legs?.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [ngClass]="[returnValue(characterTab,'feet','rarity'),'item-profile']"
+                                    hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(characterTab.equipement?.feet)"
+                                    (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url(' + equipImg(characterTab,'feet') + ')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div *ngIf="characterTab.equipement?.feet" class="item-details"><span
+                                                [class]="returnValue(characterTab,'feet','rarity')">{{characterTab.equipement?.feet?.name}}</span>
+                                            <br> {{characterTab.equipement?.feet?.ilvl}}
+                                        </div>
+                                    </a>
+                                    <div class="tooltip-window" *ngIf="characterTab.equipement?.feet">
+                                        <span
+                                            [class]="characterTab.equipement?.feet?.rarity">{{characterTab.equipement?.feet?.name}}
+                                        </span> <br>
+                                        Item level: {{characterTab.equipement?.feet?.ilvl}} <br>
+                                        <div *ngFor="let stat of characterTab.equipement?.feet?.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div *ngFor="let modifier of characterTab.equipement?.feet?.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div *ngFor="let aptitude of characterTab.equipement?.feet?.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of characterTab.equipement?.feet?.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [ngClass]="[returnValue(characterTab,'trinket1','rarity'),'item-profile']"
+                                    hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(characterTab.equipement?.trinket1)"
+                                    (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url(' + equipImg(characterTab,'trinket1') + ')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div *ngIf="characterTab.equipement?.trinket1" class="item-details"><span
+                                                [class]="returnValue(characterTab,'trinket1','rarity')">{{characterTab.equipement?.trinket1?.name}}</span>
+                                            <br> {{characterTab.equipement?.trinket1?.ilvl}}
+                                        </div>
+                                    </a>
+                                    <div class="tooltip-window" *ngIf="characterTab.equipement?.trinket1">
+                                        <span
+                                            [class]="characterTab.equipement?.trinket1?.rarity">{{characterTab.equipement?.trinket1?.name}}
+                                        </span> <br>
+                                        Item level: {{characterTab.equipement?.trinket1?.ilvl}} <br>
+                                        <div *ngFor="let stat of characterTab.equipement?.trinket2?.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let modifier of characterTab.equipement?.trinket1?.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let aptitude of characterTab.equipement?.trinket1?.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of characterTab.equipement?.trinket1?.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [ngClass]="[returnValue(characterTab,'trinket2','rarity'),'item-profile']"
+                                    hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(characterTab.equipement?.trinket2)"
+                                    (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url(' + equipImg(characterTab,'trinket2') + ')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div *ngIf="characterTab.equipement?.trinket2" class="item-details"><span
+                                                [class]="returnValue(characterTab,'trinket2','rarity')">{{characterTab.equipement?.trinket2?.name}}</span>
+                                            <br> {{characterTab.equipement?.trinket2?.ilvl}}
+                                        </div>
+                                    </a>
+                                    <div class="tooltip-window" *ngIf="characterTab.equipement?.trinket2">
+                                        <span
+                                            [class]="characterTab.equipement?.trinket2?.rarity">{{characterTab.equipement?.trinket2?.name}}
+                                        </span> <br>
+                                        Item level: {{characterTab.equipement?.trinket2?.ilvl}} <br>
+                                        <div *ngFor="let stat of characterTab.equipement?.trinket2?.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let modifier of characterTab.equipement?.trinket2?.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div
+                                            *ngFor="let aptitude of characterTab.equipement?.trinket2?.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of characterTab.equipement?.trinket2?.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3>Bag</h3>
+                              <div class="bag-wrapper">
+                                <div  *ngFor="let item of items"[ngClass]="[item.link.rarity,'item-profile']" hover-class="tooltip"
+                                    (mouseenter)="tooltipEquipement(item)" (mouseleave)="tooltipEquipementEnd()">
+                                    <a>
+                                        <div class="item-icon"
+                                            [ngStyle]="{ 'background-image': 'url('+itemImg(item)+')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+                                        </div>
+                                        <div class="item-details"><span [class]="item.rarity">{{item.link.name}}</span>
+                                            <br> {{item.link.ilvl}}</div>
+                                    </a>
+                                    <div class="tooltip-window">
+                                        <span [class]="item.link.rarity">{{item.link.name}} <span *ngIf="item.suffix?.en.name">of {{item.suffix?.en.name}}</span> </span> <br>
+                                        Item level: {{item.link.ilvl}} <br>
+                                        <div *ngFor="let stat of item.link.stats|keyvalue">
+                                            <div *ngIf="stat.value!=0">{{stat.key}}: {{stat.value}}</div>
+                                        </div>
+                                        <div *ngFor="let modifier of item.link.modifiers|keyvalue">
+                                            <div *ngIf="modifier.value!=0">{{modifier.key}}: {{modifier.value}}</div>
+                                        </div>
+                                        <div *ngFor="let aptitude of item.link.aptitudes|keyvalue">
+                                            <div *ngIf="aptitude.value!=0">{{aptitude.key}}: {{aptitude.value}}</div>
+                                        </div>
+                                        <div *ngFor="let skill of item.link.skills">
+                                            <div *ngIf="skill">{{skill.name}}: {{skill.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    </section>
+                </mat-tab>
+                <mat-tab label="Biography" *ngIf="characterTab && characterTab.ownhistory">
+                    <section *ngIf="isEditingManager(characterTab.ownhistory)" id="biography-details"
+                        class="biography details">
+                        <div class="section-wrapper">
+                            <textarea formControlName="ownhistory" *ngIf="isEditing" type="text"
+                                placeholder="{{characterTab.ownhistory}}"></textarea>
+                            <div *ngIf="!isEditing">{{characterTab.ownhistory}}</div>
+                        </div>
+                    </section>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </form>
+</div>

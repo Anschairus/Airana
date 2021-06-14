@@ -1,0 +1,32 @@
+
+.wrapper{
+}
+h2 {
+  margin-bottom: 0.2em;
+  user-select: none;
+}
+.suffix-wrapper{
+  
+  width:90%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content:space-between ;
+}
+article > ul > li {
+  display: inline-block;
+  margin-right: 1em;
+}
+article{
+  width: 25%;
+  text-align: center;
+}
+article div{
+  text-transform: capitalize;
+}
+
+span.note {
+  text-align: center;
+  font-size: 0.9em;
+  font-style: italic;
+  font-weight: lighter;
+}

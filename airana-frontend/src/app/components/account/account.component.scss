@@ -1,0 +1,81 @@
+
+/*Navbar Right*/
+.navbar-right {
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    overflow: visible;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.navbar-right>div {
+    display: flex;
+    justify-content: flex-end;
+    flex-flow: row nowrap;
+    overflow: visible;
+}
+.navbar-right .status{
+    position: relative;
+    display:block;
+}
+.status:hover .status-message{
+    display: block;
+}
+
+.status-bg{
+    background-color:lightpink;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    margin: 10px 5px;
+    box-sizing: border-box;
+    border: 1px solid red;
+}
+
+.status-message{
+    line-height: 1em;
+    left: 0;
+    top: 60px;
+    position: absolute;
+    display: none;
+    width: 220px;   
+    background-color: #574f5f;
+    border: 1px solid silver;
+    padding: 1em;
+    box-sizing: border-box;
+}
+.user.profile{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+}
+.user.profile div{
+    margin: 0 1rem 0 0;
+}
+
+
+.dropdown.right {
+    width:270px;
+    top: 50px;
+    right: 0;
+}
+@media only screen and (max-width:1000px){
+.player-name{
+display: none;
+}
+}
+@media only screen and (max-width:600px){
+.min-width600 .navbar-right{
+ display: none;
+}
+.max-width600 .user.profile{
+ display: block;
+}
+}
+
+/*
+*/

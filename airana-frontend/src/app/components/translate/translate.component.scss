@@ -1,0 +1,28 @@
+#wrapper .translate.wrapper{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+.translate.wrapper>.side{
+    border: 1px solid hotpink;
+    flex: 1 0 50%;
+    display: flex;
+    flex-flow:row wrap;
+    padding: 1rem;
+    align-content: flex-start;
+}
+.side h2{
+width: 100%;
+}.side div{
+    padding: 1rem;
+}
+.right.side{
+    border-radius: 0 8px 8px 0;
+}
+.left.side{
+    border-radius:  8px 0 0 8px ;
+}
+.analysis{
+    margin-top: 1rem;
+}

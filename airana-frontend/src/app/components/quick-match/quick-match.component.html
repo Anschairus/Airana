@@ -1,0 +1,21 @@
+<div id="wrapper" class="wrapper">
+    <h1>{{title}}</h1>
+    <div class="settings">
+        <div>
+            <div class="setting">{{config[0].settings[0].name}}</div>
+            <div class="setting value" (click)="changeA(a)">{{config[0].settings[0].value[a]}}</div>
+        </div>
+        <div *ngIf="a==1">
+            <div class="setting">{{config[0].settings[1].name}}</div>
+            <div class="setting value">{{config[0].settings[1].value}}</div>
+        </div>
+        <div *ngIf="a==2">
+            <div class="setting">{{config[0].settings[2].name}}</div>
+            <div class="setting value">{{config[0].settings[2].value}}</div>
+        </div>
+        <div>
+            <div class="setting">{{config[0].settings[3].name}}</div>
+            <div class="setting value">{{config[0].settings[3].value}}</div>
+        </div>
+    </div>
+</div>

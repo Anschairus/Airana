@@ -1,0 +1,30 @@
+
+ @import '../../../../node_modules/@angular/material/theming';
+ @mixin main-nav-theme($theme){
+  $primary:map-get($theme,primary);
+  $accent:map-get($theme,accent);
+  $warn:map-get($theme,warn);
+  $foreground:map-get($theme,foreground);
+  $background:map-get($theme,background);
+  .main.nav.toolbar{
+  
+    .brand {
+      text-shadow: map-get($accent, A100) 0px 0px 15px;
+      color: map-get($primary,darker-contrast);
+      
+    }
+    .brand:hover {
+      text-shadow: map-get($warn, A100) 0px 0px 15px;
+      color: map-get($warn,A100)
+    }
+    
+.MenuTabs.partial{
+    color: map-get($primary, 50);
+}
+.bubble-linker{
+    background-color: map-get($primary, 300);
+}
+  }
+}
+
+/**/

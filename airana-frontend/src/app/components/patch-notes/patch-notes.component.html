@@ -1,0 +1,24 @@
+<div id="wrapper" class="wrapper">
+    <h1>{{title}}</h1>
+    <article *ngFor="let change of changelog">
+        <h3>{{change.title}}</h3><span class="note" *ngIf="change.span">{{change.span}}</span>
+        <p *ngIf="change.text" [innerHTML]="change.text"></p>
+        <div *ngIf="change.ul">
+            <ul *ngFor="let li of change.ul;let i of index">
+
+                <li>{{li.title}} <span *ngIf="li.span" class="note">{{li.span}}</span></li>
+
+
+            </ul>
+            <div *ngFor="let li of change.ul;let i of index">
+                <div *ngIf="li.text">
+                    <h3 id="{{i}}">{{li.title}}</h3> <span *ngIf="li.span" class="note">{{li.span}}</span>
+                    <p>
+                        {{li.text}}
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </article>

@@ -1,0 +1,90 @@
+<mat-sidenav-container (window:beforeunload)="notRememberMe()" class="sidenav-container mat-typography body"
+  [ngClass]="currentTheme">
+  <mat-sidenav #drawer class="sidenav" [ngClass]="{hidden:!(isHandset$ | async)}" fixedInViewport="false"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar class="sidenav toolbar">
+      <div class="navbar-left">
+        <a [routerLink]="''" class="logo" (click)="selectedMenuTab = false; selectedSubmenu = false"><span
+            class="brand">Airana</span>
+        </a>
+
+      </div>
+    </mat-toolbar>
+    <mat-nav-list>
+      <ul class="MenuTabs" *ngIf="!selectedMenuTab">
+
+
+        <a [routerLink]="menuHref(menuTab.name)" class="menutab" routerLinkActive="active"
+          *ngFor="let menuTab of menuTabs" (click)="onSelect(menuTab)">
+          <li>{{menuTab.name}}</li>
+        </a>
+      </ul>
+      <ul class="MenuTabs" *ngIf="selectedMenuTab">
+        <a [routerLink]="''" class="menutab back" (click)="selectedMenuTab = false; selectedSubmenu = false">
+          <mat-icon mat-raised-button class="navigate_before mat-icon" color="accent">navigate_before</mat-icon>
+          Back
+        </a>
+        <a [routerLink]="menuHref(selectedMenuTab.name)+'/'+menuHref(selectedMenuTab.submenus[i])"
+          routerLinkActive="active" class="menutab" [routerLinkActiveOptions]="{exact: true}"
+          (click)="dropdownLeftTrigger()" *ngFor="let submenu of selectedMenuTab.submenus; let i = index">
+          <li>{{submenu}}</li>
+        </a>
+      </ul>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+    <mat-toolbar class="main nav toolbar" color="primary">
+      <div class="navbar-left">
+
+        <a [routerLink]="''" class="logo" (click)="selectedMenuTab = false; selectedSubmenu = false"><span
+            class="brand">Airana</span>
+        </a>
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      </div>
+
+      <div class="navbar-partial" [ngClass]="{hidden:(isHandset$ | async)}">
+
+        <mat-select class="selected-partial" *ngIf="selectedMenuTab" routerLinkActive="active"
+          [(ngModel)]="selectedMenuTab">
+          <mat-option *ngFor="let menuTab of menuTabs; let i = index" [value]="menuTab"[routerLink]="menuHref(menuTab.name)">{{menuTab.name}}</mat-option>
+        </mat-select>
+        <div class="title mobile"><span class="brand">Airana</span>
+        </div>
+
+        <span class="vertical-separation-navbar" *ngIf="selectedMenuTab"></span>
+        <ul class="MenuTabs partial" *ngIf="!selectedMenuTab">
+
+          <a [routerLink]="menuHref(menuTab.name)" routerLinkActive="active" *ngFor="let menuTab of menuTabs"
+            (click)="onSelect(menuTab)">
+            <li>{{menuTab.name}}</li>
+          </a>
+        </ul>
+        <ul class="MenuTabs partial" *ngIf="selectedMenuTab">
+
+          <a [routerLink]="menuHref(selectedMenuTab.name)+'/'+menuHref(selectedMenuTab.submenus[i])"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            *ngFor="let submenu of selectedMenuTab.submenus; let i = index">
+            <li>{{submenu}}</li>
+          </a>
+        </ul>
+        <div class="browse" *ngIf="false">
+          <img class="browse icon " src="assets/img/browse.png " alt="search " (click)="dropdownBrowse() ">
+          <div class="bubble-linker " *ngIf="dropdownBrowseOn "></div>
+          <input class="dropdown-browse " placeholder="Search... " *ngIf="dropdownBrowseOn ">
+        </div>
+      </div>
+      <!--NAVBAR RIGHT-->
+
+      <account-component></account-component>
+    </mat-toolbar>
+    <!-- <div class="display"></div>-->
+    <!-- Add Content Here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,28 @@
+
+.sign-in{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;}
+    .signInHelp h2{
+        padding: 0;
+        margin: 0;
+        display: inline-block;
+        font-weight: normal;
+        font-size: 1em;
+    }
+    
+   
+    button, .signInHelp,.signInInput{
+        margin: 1em;
+    }
+    .signInInput{
+        height: 2em;
+        padding: 0 2em;
+        font-size: 1.2em;
+        line-height: 2em;
+        text-align: center;
+    }
+     .rememberMe input{
+margin: 0;
+    }

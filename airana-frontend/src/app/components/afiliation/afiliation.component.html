@@ -1,0 +1,38 @@
+<div class="frontground" *ngIf="!loaded">
+  <div class="main-loading airana-title">Airana</div>
+</div>
+
+<div id="wrapper" class="wide grid wrapper">
+  <h1>{{title}}</h1>
+
+  <div>
+    
+    <div class="filter-bar">
+      <input type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Search">
+      <mat-radio-group id="category" [(ngModel)]="category" aria-label="Select sort direction">
+        <mat-radio-button class="tp-radio-button" (click)="orderBy(category,order)" ngDefaultControl value="name">Name</mat-radio-button>
+      </mat-radio-group>
+      <mat-radio-group id="direction" [(ngModel)]="order" aria-label="Select sort direction">
+        <mat-radio-button  (click)="orderBy(category,order)" ngDefaultControl [value]="false">Desc.</mat-radio-button>
+        <mat-radio-button  (click)="orderBy(category,order)" ngDefaultControl [value]="true">Asc.</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    
+    <ul *ngIf="afiliationTabs" class="AfiliationTabs undecorated">
+      <a (click)="onSelect(afiliationTab)" class="AfiliationTab" *ngFor="let afiliationTab of orderBy(category,order)|filter:searchTerm">
+        <li>
+          <h4>{{afiliationTab[lang].name}}</h4>
+          <br>
+          <ul>
+            <li>{{afiliationTab[lang].description}}</li>
+          </ul>
+        </li>
+        <div class="character-image "
+          [ngStyle]="{'background-image':'url('+afiliationImg(afiliationTab)+')','background-position':'center center','background-repeat':'no-repeat','background-size': 'cover'}">
+        </div>
+
+
+      </a>
+    </ul>
+  </div>
+</div>

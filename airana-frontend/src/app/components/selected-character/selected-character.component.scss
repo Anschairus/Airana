@@ -1,0 +1,491 @@
+
+/*VARIABLES*/
+$str:hsl(0, 80%, 65%);
+$agi:hsl(40, 80%, 65%);
+$dex:hsl(80, 80%, 65%);
+$int:hsl(240, 90%, 75%);
+$per:hsl(160, 80%, 65%);
+$wil:hsl(280, 80%, 65%);
+$vit:hsl(120, 80%, 65%);
+$car:hsl(320, 80%, 65%);
+$luk:hsl(200, 80%, 65%);
+
+$liMargin:6px;
+
+$common:rgb(163, 163, 163);
+$uncommon:rgb(9, 221, 9);
+$rare:rgb(76, 161, 218);
+$epic:rgb(131, 55, 131);
+$legendary:rgb(247, 94, 234);
+
+/* MARGINS ADJUSTEMENT
+
+flex: 0 1 calc((100% / 4) - #{$liMargin} + (#{$liMargin} / 4)); Poner en <li> para crear tamaños, substituir 4 por el Nº de columnas
+
+ul>li:nth-of-type(1n){
+  margin-right: 0;
+}
+ul>li:nth-of-type(1n+1){
+  margin-left:0;
+}
+ul>li:nth-last-of-type(1){
+  margin-right: 0;
+}
+*/
+//PROVISIONAL***/\***PROVISIONAL\\
+//PROVISIONAL**/  \**PROVISIONAL\\
+//PROVISIONAL*/NARI\*PROVISIONAL\\
+
+
+//GENERAL***/\***GENERAL\\
+//GENERAL**/  \**GENERAL\\
+//GENERAL*/NARI\*GENERAL\\
+
+section.details>.section-wrapper{
+width: 100%;
+display: flex;
+flex-flow: row wrap;
+justify-content: flex-start;
+align-items: flex-start;
+padding-top:2em;
+}
+.section-wrapper .title,.section-wrapper ul, .section-wrapper h3{
+  text-align: center;
+  width: 100%;
+}
+section.details, aside{
+  width: 100%;
+margin-bottom:10vh;
+}
+ul,.title{
+  margin-bottom: 1rem;
+}
+.title>div>div{
+  margin: 0 auto;
+  min-width: 120px;
+  width: 30%;
+}
+.details ul{
+     display: flex;
+     flex-flow: row wrap;
+     justify-content: flex-start;
+     text-align: center;
+     align-items: center;
+   }
+ul>li{
+  margin-right: $liMargin;
+  margin-bottom: $liMargin;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  text-align: center;
+  padding: 0.3rem;
+}
+.details ul>.full.width.li{
+  margin: 0 0 $liMargin 0;
+flex: 0 1 calc((100% / 1) - #{$liMargin} + (#{$liMargin} / 1));
+}
+ul>li *:not(span), .title input,.section-wrapper textarea{
+  min-width: auto;
+  width: 100%;
+  padding:0 1em;
+}
+ul>li span{
+  padding:0;
+}
+
+/*STAT COLOURS*/
+section.stat.details .str>label:nth-child(1),.aptitudes.details li.str>label:nth-child(1),.aptitudes.details ul>h3.str{
+  color: $str;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .agi>label:nth-child(1),.aptitudes.details li.agi>label:nth-child(1),.aptitudes.details ul>h3.agi{
+  color: $agi;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .dex>label:nth-child(1),.aptitudes.details li.dex>label:nth-child(1),.aptitudes.details ul>h3.dex{
+  color: $dex;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .int>label:nth-child(1),.aptitudes.details li.int>label:nth-child(1),.aptitudes.details ul>h3.int{
+  color: $int;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .per>label:nth-child(1),.aptitudes.details li.per>label:nth-child(1),.aptitudes.details ul>h3.per{
+  color: $per;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .wil>label:nth-child(1),.aptitudes.details li.wil>label:nth-child(1),.aptitudes.details ul>h3.wil{
+  color: $wil;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .vit>label:nth-child(1),.aptitudes.details li.vit>label:nth-child(1),.aptitudes.details ul>h3.vit{
+  color: $vit;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .car>label:nth-child(1),.aptitudes.details li.car>label:nth-child(1),.aptitudes.details ul>h3.car{
+  color: $car;
+  text-shadow: 1px 1px black;
+}
+section.stat.details .luk>label:nth-child(1),.aptitudes.details li.luk>label:nth-child(1),.aptitudes.details ul>h3.luk{
+  color: $luk;
+  text-shadow: 1px 1px black;
+}
+
+//SPECIFIC***/\***SPECIFIC\\
+//SPECIFIC**/  \**SPECIFIC\\
+//SPECIFIC*/NARI\*SPECIFIC\\
+
+div.content{
+  width: 100%;
+}
+
+.nav-wrapper{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+.nav-wrapper a{
+  cursor: pointer;
+}
+.nav-wrapper>a,.nav-wrapper>a>div{
+  text-align: center;
+  position: relative;
+  margin-bottom: 1.2rem;
+  flex: 0 0 45%;
+  border-radius: 1rem;
+  height: 2rem;
+  line-height: 1rem;
+  padding: 0.5rem;
+}
+.nav-wrapper>a>div::after{
+  content: "";
+position: absolute;
+width: calc(3rem - 2px);
+flex: 1 1 48%;
+top: -0.5rem;
+bottom: -0.5rem;
+left: -0.5rem;
+border-radius: 1.5rem;
+z-index: -1;
+}
+
+#wrapper nav .fixed{
+  height: 40vh;
+  width: 16%;
+  xtop: calc(50px + 112px);
+  left: 0;
+ 
+}
+#wrapper nav .fixed.nav-wrapper{
+ padding: 0.5rem;
+  display: block;
+}
+#wrapper nav.fixed.nav-wrapper>div{
+  flex: 0 0 auto;
+  width: 100%;
+  font-size: 0.8em;
+}
+#wrapper aside .fixed{
+  width: 16%;
+  xtop: calc(50px + 92px);
+  right: 0;
+  padding: 0 1rem 0 0;
+}
+#wrapper aside{
+  max-width: 400px;
+}
+#wrapper aside .wrapper{
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-around;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+#wrapper aside .profile{
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+
+#wrapper aside .profile .edit.buttons{
+    display: flex;
+  flex: 1 1 auto;
+  justify-content: space-around;
+  align-items: center;
+  flex-flow: row nowrap;
+  margin: 0.5rem 0;
+  transition: height 0.65s,width 0.65s;
+}
+#wrapper aside .profile .edit.buttons.fixed{
+  width: auto;
+  position: fixed;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  xright: -5px;
+  padding: 0.5rem;
+  bottom: 1.3rem;
+  z-index: 1000;
+  border-radius:50% 0 0 50% ;
+  //border: 1px solid $primary;
+ // background: $background;
+
+}
+.profile ul{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+.profile ul>li{
+flex:1 1 auto;
+max-width: 400px;
+justify-self: center;margin-right: 0;
+
+}
+.profile ul>li{
+max-width: 400px;
+justify-self: center;
+}
+ .stat.details .title>h2,.details .title>h2{
+    width: 100%;
+}
+   .main.details ul>li{
+flex: 0 1 calc((100% / 2) - #{$liMargin} + (#{$liMargin} / 2));
+}
+.main.details ul>li:nth-of-type(2n){
+  margin-right: 0;
+}
+.main.details ul>li:nth-of-type(2n+1){
+  margin-left:0;
+}
+.personal.details ul>li{
+flex: 0 1 calc((100% / 2) - #{$liMargin} + (#{$liMargin} / 2));
+text-transform: capitalize;
+}
+.personal.details ul>li:nth-of-type(2n){
+  margin-right: 0;
+}
+.personal.details ul>li:nth-of-type(2n+1){
+  margin-left:0;
+}
+.stat.details ul,.modifier.details ul{
+  
+flex: 0 1 calc(100% / 3);
+  align-content: stretch;
+}
+.stat.details ul:not(:nth-of-type(1)>li):nth-of-type(3n+1)>li{
+  margin-right: 0;
+}
+.stat.details ul:nth-of-type(3n+1)>li,.modifier.details ul:nth-of-type(3n)>li{
+  margin-right: 0;
+}
+.stat.details ul:nth-of-type(3n+2)>li,.modifier.details ul:nth-of-type(3n+1)>li{
+  margin-left:0;
+}
+.stat.details ul:nth-last-of-type(1)>li,.modifier.details ul:nth-last-of-type(1)>li{
+  margin-right: 0;
+}
+.stat.details ul>li,.modifier.details ul>li{
+flex: 0 1 calc((100% / 1) - #{$liMargin} + (#{$liMargin} / 1));
+}
+#stats-half{
+  
+flex: 0 1 calc(100%);
+  margin-right: 0;
+  flex-flow: row wrap;
+}
+
+#stats-half>li.half{
+  flex: 0 1 calc((100% / 2) - #{$liMargin} + (#{$liMargin} / 2));
+}
+
+ul#stats-half>.half:nth-of-type(1){
+  margin-left:0;
+  margin-right: $liMargin;
+}
+ul#stats-half>.half:nth-of-type(2){
+  margin-right: 0;
+}
+.aptitudes.details ul>h3{
+flex: 0 1 calc((100% / 1) - #{$liMargin} + (#{$liMargin} / 1));
+  padding-left:1rem;
+  text-transform: uppercase;
+}
+.aptitudes.details ul>li{
+flex: 0 1 calc((100% / 2) - #{$liMargin} + (#{$liMargin} / 2));
+  text-transform: capitalize;
+}
+.aptitudes.details ul>li:nth-of-type(2n){
+  margin-right: 0;
+}
+.aptitudes.details ul>li:nth-of-type(2n+1){
+  margin-left:0;
+} 
+.equipement-wrapper{
+  width: 100%;
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  padding-top:2em;
+  margin-bottom:3em;
+}
+.bag-wrapper{
+  width: 100%;
+  border-radius: 5px;
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  padding:1em;
+  background-color: #b4dfd1;
+  border:3px dashed #82c9b6
+}
+.bag-wrapper>.item-profile{
+  margin-right: 1em;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}.bag-wrapper>.item-profile .item-details{
+  padding:0.5em;
+  box-sizing: border-box;
+}
+.item-profile>a{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+}
+
+.item-profile>a>div.item-icon{
+  
+  height: 50px;
+  width: 50px;
+}
+.item-profile.Common>a>div.item-icon{
+  border:2px solid $common;
+}
+.item-profile.Uncommon>a>div.item-icon{
+  border:2px solid $uncommon;
+}
+.item-profile.Rare>a>div.item-icon{
+  border:2px solid $rare;
+}
+
+.item-profile.Epic>a>div.item-icon{
+  border:2px solid $epic;
+}
+.item-profile.Legendary>a>div.item-icon{
+  border:2px solid $legendary;
+}
+.item-profile>a>div.item-details{
+  
+  text-align:start;
+  height: 50px;
+  min-width: 50px;
+  padding-left: 1em;
+}
+.item-profile>a>.item-details{
+  color:white;
+}
+.item-profile>a>.item-details>.Common,.tooltip-window .Common{
+  color:$common;
+}
+.item-profile>a>.item-details>.Uncommon,.tooltip-window .Uncommon{  
+  color:$uncommon;
+}
+.item-profile>a>.item-details>.Rare,.tooltip-window .Rare{  
+  color:$rare;
+}.item-profile>a>.item-details>.Epic,.tooltip-window .Epic{  
+  color:$epic;
+}.item-profile>a>.item-details>.Legendary,.tooltip-window .Legendary{  
+  color:$legendary;
+}
+.tooltip {
+  text-decoration:none;
+  position:relative;
+}
+.tooltip-window {
+  display:none;
+  visibility:none;
+  opacity: 0;
+  padding: 1.2em;
+  border-radius: 5px;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+  
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+.Common .tooltip-window{
+  border-top: 2px solid $common;
+  border-bottom: 2px solid $common;
+}
+.Uncommon .tooltip-window{
+  border-top: 2px solid $uncommon;
+  border-bottom: 2px solid $uncommon;
+}.Rare .tooltip-window{
+  border-top: 2px solid $rare;
+  border-bottom: 2px solid $rare;
+}.Epic .tooltip-window{
+  border-top: 2px solid $epic;
+  border-bottom: 2px solid $epic;
+}.Legendary .tooltip-window{
+  border-top: 2px solid $legendary;
+  border-bottom: 2px solid $legendary;
+}
+.tooltip:hover .tooltip-window {
+  display:block;
+  visibility:visible;
+  opacity:1;
+  position:fixed;
+  overflow:hidden;
+  transition:visibility 0.5s linear, opacity 1s linear;
+  transition-delay: 1s;
+}
+.tooltip-window>div>div{
+  text-transform: capitalize;
+}
+
+.biography.details .section-wrapper div{
+  width: 100%;
+  padding: 0 1rem;
+  text-align: left;
+}
+
+
+@media only screen and (min-width: 960px) {
+
+   div.content{ 
+  width: 84%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+   }
+   mat-tab-group{
+     padding:0 1em 1em;
+   }
+   #nav{
+     width: 16%;
+     height: 100%;
+   }
+   #right-aside{
+     width: 16%;
+     height: 100%;
+     -webkit-order:3;
+     order: 3;
+     
+   }
+.nav-wrapper>a, mat-tab-group{
+  width: 100%;
+}
+
+}

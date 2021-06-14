@@ -1,0 +1,101 @@
+
+@import '../node_modules/@angular/material/theming';
+//AIRANA·DARK***/\***AIRANA·DARK\\
+//AIRANA·DARK**/  \**AIRANA·DARK\\
+//AIRANA·DARK*/NARI\*AIRANA·DARK\\
+$airana-dark-typography: mat-typography-config(
+  $font-family:   'normalfont,"Helvetica Neue", sans-serif',
+  $display-4:     mat-typography-level(112px, 112px, 300),
+  $display-3:     mat-typography-level(56px, 56px, 600),
+  $display-2:     mat-typography-level(45px, 48px, 400),
+  $display-1:     mat-typography-level(34px, 40px, 600),
+  $headline:      mat-typography-level(24px, 32px, 600),
+  $title:         mat-typography-level(20px, 32px, 600),
+  $subheading-2:  mat-typography-level(16px, 22px, 600),
+  $subheading-1:  mat-typography-level(15px, 24px, 600),
+  $body-2:        mat-typography-level(14px, 24px, 600),
+  $body-1:        mat-typography-level(14px, 30px, 600),
+  $caption:       mat-typography-level(12px, 20px, 600),
+  $button:        mat-typography-level(10px, 14px, 800),
+    // Line-height must be unit-less fraction of the font-size.
+  $input:         mat-typography-level(inherit, 1.125, 400)
+
+);
+$airana-dark-primary-color: (
+  // Non-accent Backgrounds
+  // General  
+      50 : hsl(342, 100%, 97%),    // Most far away
+      100 : hsl(342, 100%, 92%),    // Far far away
+      200 : hsl(341, 100%, 86%),    // Far away
+      300 : hsl(342, 100%, 81%),    // Middle far
+      400 : hsl(342, 100%, 76%),   // Middle
+      500 : hsl(342, 100%, 72%),   // Middle close
+      600 : hsl(343, 100%, 71%),   // Close
+      700 : hsl(344, 100%, 68%),   // Very close
+      800 : hsl(345, 100%, 66%),   // Very very Close
+      900 : hsl(346, 100%, 63%),   // Closest
+      A100: hsl(340, 100%, 99%),   // Most far away
+      A200: hsl(347, 100%, 94%),  // Middle
+      A400: hsl(347, 100%, 90%),  // Close
+      A700:hsl(348, 100%, 85%),  // Closest
+  contrast: (
+      50: $dark-primary-text,     // Most far away
+      100: $dark-primary-text,    // Far far away
+      200: $dark-primary-text,    // Far away
+      300: $dark-primary-text,    // Middle far
+      400: $dark-primary-text,    // Middle
+      500: $light-primary-text,   // Middle close
+      600: $light-primary-text,   // Close
+      700: $light-primary-text,   // Very close
+      800: $light-primary-text,   // Very very Close
+      900: $light-primary-text,   // Closest
+      A100: $dark-primary-text,   // Most far away
+      A200: $light-primary-text,  // Middle
+      A400: $light-primary-text,  // Close
+      A700: $light-primary-text,  // Closest
+  )
+);
+$airana-dark-secondary-color: (
+  // Non-accent Backgrounds
+  // General  
+    50 : #ebeaec,// Most far away
+    100 : #cdcacf,// Far far away
+    200 : #aba7af,// Far away
+    300 : #89848f,// Middle far
+    400 : #706977,// Middle
+    500 : #574f5f,// Middle close
+    600 : #4f4857,// Close
+    700 : #463f4d,// Very close
+    800 : #3c3643,// Very very Close
+    900 : #2c2632,// Closest
+    A100 : #b97eff,// Most far away
+    A200 : #9e4bff, // Middle
+    A400 : #8119ff,// Close
+    A700 : #7400fe,// Closest
+  contrast: (
+      50: $dark-primary-text,     // Most far away
+    100: $dark-primary-text,    // Far far away
+    200: $dark-primary-text,    // Far away
+    300: $dark-primary-text,    // Middle far
+    400: $dark-primary-text,    // Middle
+    500: $light-primary-text,   // Middle close
+    600: $light-primary-text,   // Close
+    700: $light-primary-text,   // Very close
+    800: $light-primary-text,   // Very very Close
+    900: $light-primary-text,   // Closest
+    A100: $dark-primary-text,   // Most far away
+    A200: $light-primary-text,  // Middle
+    A400: $light-primary-text,  // Close
+    A700: $light-primary-text,  // Closest
+  )
+);
+
+$airana-dark-theme: mat-dark-theme(
+  mat-palette($airana-dark-primary-color), mat-palette($airana-dark-secondary-color),
+  mat-palette($mat-red)
+);
+$background: mat-color($airana-dark-secondary-color, 500);
+  $foreground:mat-color($mat-dark-theme-foreground,text);
+  $primary: mat-color($airana-dark-primary-color, 200);
+  $accent: mat-color($airana-dark-secondary-color, A200);
+  $warn: mat-color($mat-red, 500);

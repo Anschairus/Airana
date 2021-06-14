@@ -1,0 +1,12 @@
+<div id="wrapper" class="wrapper">
+    <h1>{{title}}</h1>
+    <div class="suffix-wrapper">
+    <article *ngFor="let suffix of suffixTabs">
+        <h2>{{suffix.en.name}}</h2>
+        <div
+                                            *ngFor="let stat of suffix.stats|keyvalue">
+                                            <div >{{stat.value}}</div>
+                                        </div>
+                                    </article>
+                                </div>
+</div>

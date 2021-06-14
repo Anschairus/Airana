@@ -1,0 +1,70 @@
+<div id="wrapper" class="sign-up wrapper">
+
+  <h1>Sign Up</h1>
+  <article>
+
+    <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+        <label for="username">Username</label>
+        <br>
+        <input class="signUpInput" type="text" name="username" [(ngModel)]="model.username" #username="ngModel"
+          required>
+        <div *ngIf="f.submitted && !username.valid" class="help-block">Username is invalid</div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid  }">
+        <label for="email">E-Mail</label>
+        <br>
+        <input class="signUpInput" type="text" name="email" [(ngModel)]="model.email" #email="ngModel" required>
+        <div *ngIf="f.submitted && !email.valid" class="help-block">Last Name is required</div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+        <label for="name">Name</label>
+        <br>
+        <input class="signUpInput" type="text" name="name" [(ngModel)]="model.name" #name="ngModel" required autofocus>
+        <br>
+        <div *ngIf="f.submitted && !name.valid" class="help-block">Your name is invalid</div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !surname.valid }">
+        <label for="surname">Surname</label>
+        <br>
+        <input class="signUpInput" type="text" name="surname" [(ngModel)]="model.surname" #surname="ngModel" required>
+        <br>
+        <div *ngIf="f.submitted && !surname.valid" class="help-block">Your surname is invalid</div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid}">
+        <label for="password">Type your password</label>
+        <br>
+        <input class="signUpInput" type="password" name="password" [(ngModel)]="model.password" #password="ngModel"
+          required>
+        <div *ngIf="f.submitted && !password.valid" class="help-block">Password is invalid</div>
+      </div>
+      <div class="form-group"
+        [ngClass]="{ 'has-error':f.submitted&&model.password!=model.repassword&&model.password.length>2}">
+        <label for="repassword">Re-type your password</label>
+        <br>
+        <input class="signUpInput" type="password" name="repassword" [(ngModel)]="model.repassword"
+          #repassword="ngModel" required>
+        <div *ngIf="f.submitted&&model.password!=model.repassword&&model.password.length>2" class="help-block">
+          Passwords
+          doesn't match</div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !birthdate.valid }">
+        <label for="birthdate">Date of birth</label>
+        <br>
+        <input class="signUpInput" type="date" name="birthdate" [(ngModel)]="model.birthdate" #birthdate="ngModel"
+          required>
+        <div *ngIf="f.submitted && !birthdate.valid" class="help-block">Date of birth is invalid</div>
+      </div>
+
+      <button mat-button class="background accent"[disabled]="loading" type="submit">Sign Up</button>
+      <a [routerLink]="['/sign-in']">Cancel</a>
+    </form>
+  </article>
+
+</div>

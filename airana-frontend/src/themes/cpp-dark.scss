@@ -1,0 +1,95 @@
+//CPP·Dark***/\***CPP·Dark\\
+//CPP·Dark**/  \**CPP·Dark\\
+//CPP·Dark*/NARI\*CPP·Dark\\
+
+// Line-height must be unit-less fraction of the font-size.
+$cpp-dark-typography: mat-typography-config(
+  $font-family:   'normalfont,"Helvetica Neue", sans-serif',
+  $display-4:     mat-typography-level(112px, 112px, 300),
+  $display-3:     mat-typography-level(56px, 56px, 600),
+  $display-2:     mat-typography-level(45px, 48px, 400),
+  $display-1:     mat-typography-level(34px, 40px, 600),
+  $headline:      mat-typography-level(24px, 32px, 600),
+  $title:         mat-typography-level(20px, 32px, 600),
+  $subheading-2:  mat-typography-level(16px, 22px, 600),
+  $subheading-1:  mat-typography-level(15px, 24px, 600),
+  $body-2:        mat-typography-level(14px, 24px, 600),
+  $body-1:        mat-typography-level(14px, 30px, 600),
+  $caption:       mat-typography-level(12px, 20px, 600),
+  $button:        mat-typography-level(10px, 14px, 800),
+  $input:         mat-typography-level(inherit, 1.125, 400)
+
+); 
+$cpp-dark-primary-color: (
+  // Non-accent Backgrounds
+  // General  
+     50 : hsl(304, 7%, 92%),
+    100 : hsl(300, 7%, 79%),
+    200 : hsl(296, 8%, 65%),
+    300 : hsl(292, 9%, 51%),
+    400 : hsl(288, 14%, 40%),
+    500 : hsl(286, 24%, 30%),
+    600 : hsl(279, 25%, 27%),
+    700 : hsl(276, 27%, 23%),
+    800 : hsl(272, 28%, 20%),
+    900 : hsl(268, 35%, 14%),
+    A100 : hsl(280, 100%, 70%),
+    A200 : hsl(280, 100%, 60%),
+    A400 : hsl(280, 100%, 50%),
+    A700 : hsl(280, 100%, 45%),
+  contrast: (
+      50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+  )
+);
+$cpp-dark-secondary-color: (
+  // Non-accent Backgrounds
+  // General  
+  //600, es el Peacock Blue - Marston & Langinger
+50 : hsl(156, 42%, 92%),
+    100 : hsl(160, 40%, 79%),
+    200 : hsl(164, 40%, 65%),
+    300 : hsl(168, 40%, 51%),
+    400 : hsl(172, 44%, 40%),
+    500 : hsl(177, 44%, 30%),
+    600 : hsl(180, 44%, 27%),
+    700 : hsl(184, 56%, 23%),
+    800 : hsl(188, 57%, 20%),
+    900 : hsl(192, 53%, 14%),
+    A100 : hsl(180, 100%, 73%),
+    A200 : hsl(180, 100%, 63%),
+    A400 : hsl(180, 100%, 53%),
+    A700 : hsl(180, 100%, 48%),
+  contrast: (
+     50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+  )
+);
+
+$cpp-dark-theme: mat-dark-theme(
+  mat-palette($cpp-dark-primary-color,600,50,700), mat-palette($cpp-dark-secondary-color,200,100,A100),mat-palette($mat-yellow)
+);

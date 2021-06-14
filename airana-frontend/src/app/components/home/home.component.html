@@ -1,0 +1,22 @@
+<div class="frontground" *ngIf="!loaded">
+  <div class="main-loading airana-title">Airana</div>
+</div>
+<div id="wrapper" class="wrapper">
+  <h1>Hi {{currentAccount.username}}!</h1>
+
+  <br>
+
+  <div>
+
+    <p>You're Signed In</p>
+
+
+
+    <div>
+      <p>
+        <a [routerLink]="['/account/sign-in']">Logout</a>
+      </p>
+    </div>
+
+
+  </div>

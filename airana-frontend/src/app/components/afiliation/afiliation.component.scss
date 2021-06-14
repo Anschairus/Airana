@@ -1,0 +1,147 @@
+
+.pointer {
+  cursor: pointer;
+}
+
+h4 {
+  text-decoration: underline;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.5em;
+  box-sizing: border-box;
+}
+input{
+  border-radius: 1em 1em 0 0;
+  padding-left: 0.5em;
+}
+.form-group {
+  width: 100%;
+  text-align: center;
+}
+.form-control {
+  text-align: center;
+  width: 300px;
+  line-height: normal;
+  box-sizing: border-box;
+  padding: 1em !important;
+  height: 40px;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid rgba(192, 192, 192, 1);
+}
+.filter-bar{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+.mat-radio-group{
+  background-color: #706977;
+  border-radius:1em 1em 0 0;
+  padding: 3px;
+}
+.mat-radio-button{
+  padding-right: 1em;
+}
+.AfiliationTabs {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  border-top: 2px solid rgba(192, 192, 192, 1);
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+ul.undecorated {
+  list-style: none;
+}
+.AfiliationTab {
+  position: relative;
+  width: calc(25% - 0em);
+  flex:1 1 auto;
+  margin: 1.5em 0 0 0;
+  padding: 1em;
+  box-sizing: border-box;
+  border: 1px solid rgba(192, 192, 192, 1);
+  background-color: rgba(255, 182, 193, 0.1);
+  overflow: hidden;
+  transition: 0.3s all;
+  xmax-height: 400px;
+  max-width: 400px;
+  z-index: 5;
+}
+.AfiliationTab:hover  li{
+  color: #ffffff;
+  text-decoration: none;
+  outline: none;
+}
+
+.character-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: scale(1, 1);
+  transition: 0.3s all;
+  overflow: hidden;
+  user-select: none;
+  z-index: -1;
+}
+.AfiliationTab:hover .character-image {
+  transform: scale(1.05, 1.05);
+  filter: grayscale(50%);
+}
+.AfiliationTab:hover ul {
+  opacity: 1;
+  z-index: 5;
+}
+.AfiliationTab ul {
+  display: flex;
+  flex-flow: row wrap;
+}
+.AfiliationTab ul li {
+  width: 100%;
+}
+.AfiliationTab ul div {
+  width: 50%;
+}
+.AfiliationTab ul {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.5em;
+  opacity: 0;
+  transition: all 0.4s;
+}
+
+.AfiliationTab:nth-child(4n + 0) {
+  border-right: none;
+}
+.AfiliationTab:nth-child(1n + 0) {
+  border-left: none;
+}
+.AfiliationTab:nth-last-child(1) {
+  border-right: none;
+}
+@media only screen and (max-width: 1600px) {
+  .AfiliationTab {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .AfiliationTab {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .AfiliationTab {
+    width: 100%;
+  }
+  .filter-bar>input,.filter-bar>#category,.filter-bar>#direction{
+width:100%;
+border-radius: 0;
+border: 1px solid silver;
+  }
+}
